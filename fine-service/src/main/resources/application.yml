@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: fine-service
+
+server:
+  port: 8083

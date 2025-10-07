@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: publisher-service
+
+server:
+  port: 8086

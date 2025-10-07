@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: author-service-route
+              uri: lb://author-service
+              predicates:
+                - Path=/api/v1/author/**
+            - id: book-service-static-route
+              uri: lb://book-service
+              predicates:
+                - Path=/api/v1/book/**
+            - id: category-service-static-route
+              uri: lb://category-service
+              predicates:
+                - Path=/api/v1/category/**
+            - id: fine-service-static-route
+              uri: lb://fine-service
+              predicates:
+                - Path=/api/v1/fine/**
+            - id: loan-service-static-route
+              uri: lb://loan-service
+              predicates:
+                - Path=/api/v1/loan/**
+            - id: member-service-static-route
+              uri: lb://member-service
+              predicates:
+                - Path=/api/v1/member/**
+            - id: publisher-service-static-route
+              uri: lb://publisher-service
+              predicates:
+                - Path=/api/v1/publisher/**
+            - id: reservation-service-static-route
+              uri: lb://reservation-service
+              predicates:
+                - Path=/api/v1/reservation/**
+            - id: staff-service-static-route
+              uri: lb://staff-service
+              predicates:
+                - Path=/api/v1/staff/**
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
