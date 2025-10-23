@@ -7,24 +7,32 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="category-service" />
-        <module name="discovery-server" />
         <module name="book-service" />
+        <module name="staff-service" />
+        <module name="author-service" />
+        <module name="publisher-service" />
+        <module name="config-server" />
+        <module name="discovery-server" />
         <module name="loan-service" />
         <module name="reservation-service" />
         <module name="member-service" />
         <module name="gateway-server" />
-        <module name="staff-service" />
         <module name="fine-service" />
-        <module name="author-service" />
-        <module name="publisher-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="config-server (1)" target="21" />
+      <module name="config-server (2)" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="author-service" options="-parameters" />
       <module name="book-service" options="-parameters" />
       <module name="category-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="config-server (1)" options="-parameters" />
+      <module name="config-server (2)" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="fine-service" options="-parameters" />
       <module name="gateway-server" options="-parameters" />
