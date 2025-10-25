@@ -1,4 +1,4 @@
-package com.TurkcellTakim7.member_service.domain.entities;
+package com.TurkcellTakim7.member_service.domain.valueobjects;
 
 import java.io.Serializable;
 import java.util.Objects;

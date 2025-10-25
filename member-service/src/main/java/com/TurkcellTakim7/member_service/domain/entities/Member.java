@@ -1,9 +1,6 @@
 package com.TurkcellTakim7.member_service.domain.entities;
 
-import com.TurkcellTakim7.member_service.domain.valueobjects.Address;
-import com.TurkcellTakim7.member_service.domain.valueobjects.Email;
-import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
-import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
+import com.TurkcellTakim7.member_service.domain.valueobjects.*;
 
 import java.time.LocalDate;
 
