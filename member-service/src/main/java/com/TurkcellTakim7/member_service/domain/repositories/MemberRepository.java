@@ -1,12 +1,12 @@
 package com.TurkcellTakim7.member_service.domain.repositories;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.TurkcellTakim7.member_service.domain.entities.Member;
 import com.TurkcellTakim7.member_service.domain.valueobjects.Email;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface MemberRepository {
     Member save(Member member);

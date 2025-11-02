@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: memberservice_db_password
     ports:
-      - "5432:5432"
+      - "5438:5432"
     volumes:
       - memberdb_vol:/var/lib/postgresql/data
 

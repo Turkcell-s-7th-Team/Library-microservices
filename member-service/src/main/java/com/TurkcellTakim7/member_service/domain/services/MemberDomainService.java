@@ -2,6 +2,8 @@ package com.TurkcellTakim7.member_service.domain.services;
 
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+
 import com.TurkcellTakim7.member_service.domain.entities.Member;
 import com.TurkcellTakim7.member_service.domain.exceptions.EmailAlreadyExistsException;
 import com.TurkcellTakim7.member_service.domain.exceptions.MemberNotFoundException;
@@ -12,6 +14,7 @@ import com.TurkcellTakim7.member_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
 import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
 
+@Component
 public class MemberDomainService {
 
     private final MemberRepository memberRepository;

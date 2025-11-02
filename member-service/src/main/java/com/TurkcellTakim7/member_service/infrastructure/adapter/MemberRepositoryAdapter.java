@@ -3,6 +3,8 @@ package com.TurkcellTakim7.member_service.infrastructure.adapter;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import com.TurkcellTakim7.member_service.domain.entities.Member;
 import com.TurkcellTakim7.member_service.domain.repositories.MemberRepository;
 import com.TurkcellTakim7.member_service.domain.valueobjects.Email;
@@ -12,6 +14,7 @@ import com.TurkcellTakim7.member_service.infrastructure.entities.JpaMemberEntity
 import com.TurkcellTakim7.member_service.infrastructure.mapper.MemberEntityMapper;
 import com.TurkcellTakim7.member_service.infrastructure.repository.SpringDataMemberRepository;
 
+@Component
 public class MemberRepositoryAdapter implements MemberRepository {
 
   private final SpringDataMemberRepository springDataMemberRepository;
