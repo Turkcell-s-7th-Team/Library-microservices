@@ -1,10 +1,13 @@
 package com.TurkcellTakim7.member_service.domain.entities;
 
-import com.TurkcellTakim7.member_service.domain.valueobjects.*;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.TurkcellTakim7.member_service.domain.valueobjects.Address;
+import com.TurkcellTakim7.member_service.domain.valueobjects.Email;
+import com.TurkcellTakim7.member_service.domain.valueobjects.MemberId;
+import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
+import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
 
 public class Member {
 
@@ -29,7 +32,22 @@ public class Member {
         this.membershipLevel = Objects.requireNonNull(membershipLevel, "MembershipLevel cannot be null");
     }
 
-    // Getters
+    public static Member create(String name, String surname,
+            Email email, PhoneNumber phoneNumber, Address address, LocalDate membershipDate,
+            MembershipLevel membershipLevel) {
+        validateName(name);
+        validateName(surname);
+
+        return new Member(MemberId.generate(), name, surname, email, phoneNumber, address, membershipDate,
+                membershipLevel);
+    }
+
+    public static Member rehydrate(MemberId memberId, String name, String surname,
+            Email email, PhoneNumber phoneNumber, Address address, LocalDate membershipDate,
+            MembershipLevel membershipLevel) {
+        return new Member(memberId, name, surname, email, phoneNumber, address, membershipDate, membershipLevel);
+    }
+
     public MemberId getMemberId() {
         return memberId;
     }
@@ -96,7 +114,7 @@ public class Member {
     }
 
     // Validation Methods
-    private String validateName(String name) {
+    private static String validateName(String name) {
         Objects.requireNonNull(name, "Name cannot be null");
         if (name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be empty");
