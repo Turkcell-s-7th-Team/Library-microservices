@@ -39,6 +39,16 @@
       "mainClass": "com.TurkcellTakim7.member_service.MemberServiceApplication",
       "projectName": "member-service",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-AuthorServiceApplication<author-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.author_service.AuthorServiceApplication",
+      "projectName": "author-service",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
