@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  membersv_db:
+    container_name: membersv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: member_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: memberservice_db_password
+    ports:
+      - "5438:5432"
+    volumes:
+      - memberdb_vol:/var/lib/postgresql/data
+
+volumes:
+  memberdb_vol:

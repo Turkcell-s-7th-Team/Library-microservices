@@ -6,17 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="category-service" />
-        <module name="book-service" />
-        <module name="staff-service" />
-        <module name="author-service" />
-        <module name="publisher-service" />
         <module name="config-server" />
+        <module name="category-service" />
         <module name="discovery-server" />
+        <module name="book-service" />
         <module name="loan-service" />
         <module name="reservation-service" />
         <module name="member-service" />
         <module name="gateway-server" />
+        <module name="staff-service" />
+        <module name="author-service" />
+        <module name="publisher-service" />
         <module name="fine-service" />
       </profile>
     </annotationProcessing>

@@ -1,0 +1,44 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot - ConfigServerApplication <config-server>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.config_server.ConfigServerApplication",
+      "projectName": "config-server",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=60027 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=config-server"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot - DiscoveryServerApplication <discovery-server>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.discovery_server.DiscoveryServerApplication",
+      "projectName": "discovery-server",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=58870 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=discovery-server"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot - GatewayServerApplication <gateway-server>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.gateway_server.GatewayServerApplication",
+      "projectName": "gateway-server",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=56624 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=gateway-server"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot - MemberServiceApplication <member-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.member_service.MemberServiceApplication",
+      "projectName": "member-service",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
