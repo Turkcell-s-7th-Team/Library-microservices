@@ -3,6 +3,7 @@ package com.TurkcellTakim7.member_service.web.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.TurkcellTakim7.member_service.application.commands.CreateMemberCommand;
+import com.TurkcellTakim7.member_service.application.commands.DeleteMemberCommand;
 import com.TurkcellTakim7.member_service.application.commands.UpdateMemberCommand;
 import com.TurkcellTakim7.member_service.application.core.CommandHandler;
 import com.TurkcellTakim7.member_service.application.core.QueryHandler;
@@ -33,15 +35,18 @@ public class MemberController {
   private final CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> updateMemberCommandHandler;
   private final QueryHandler<GetMemberQuery, MemberResponse> getMemberQueryHandler;
   private final QueryHandler<GetMemberListQuery, List<MemberResponse>> getMemberListQueryHandler;
+  private final CommandHandler<DeleteMemberCommand, Void> deleteMemberCommandHandler;
 
   public MemberController(CommandHandler<CreateMemberCommand, CreatedMemberRepsonse> createMemberCommandHandler,
       CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> updateMemberCommandHandler,
       QueryHandler<GetMemberQuery, MemberResponse> getMemberQueryHandler,
-      QueryHandler<GetMemberListQuery, List<MemberResponse>> getMemberListQueryHandler) {
+      QueryHandler<GetMemberListQuery, List<MemberResponse>> getMemberListQueryHandler,
+      CommandHandler<DeleteMemberCommand, Void> deleteMemberCommandHandler) {
     this.createMemberCommandHandler = createMemberCommandHandler;
     this.updateMemberCommandHandler = updateMemberCommandHandler;
     this.getMemberQueryHandler = getMemberQueryHandler;
     this.getMemberListQueryHandler = getMemberListQueryHandler;
+    this.deleteMemberCommandHandler = deleteMemberCommandHandler;
   }
 
   @GetMapping("/{id}")
@@ -75,6 +80,11 @@ public class MemberController {
         request.membershipLevel());
 
     return updateMemberCommandHandler.handle(command);
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteMember(@PathVariable UUID id) {
+    deleteMemberCommandHandler.handle(new DeleteMemberCommand(id));
   }
 
 }

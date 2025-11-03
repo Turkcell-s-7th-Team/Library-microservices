@@ -7,7 +7,6 @@ import com.TurkcellTakim7.member_service.application.core.CommandHandler;
 import com.TurkcellTakim7.member_service.application.dto.UpdatedMemberResponse;
 import com.TurkcellTakim7.member_service.application.mapper.UpdateMemberMapper;
 import com.TurkcellTakim7.member_service.domain.entities.Member;
-import com.TurkcellTakim7.member_service.domain.repositories.MemberRepository;
 import com.TurkcellTakim7.member_service.domain.services.MemberDomainService;
 import com.TurkcellTakim7.member_service.domain.valueobjects.Address;
 import com.TurkcellTakim7.member_service.domain.valueobjects.Email;
@@ -18,15 +17,16 @@ import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
 public class UpdateMemberCommandHandler implements CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> {
 
   private final MemberDomainService memberDomainService;
-  private final MemberRepository memberRepository;
   private final UpdateMemberMapper updateMemberMapper;
 
-  public UpdateMemberCommandHandler(MemberDomainService memberDomainService, MemberRepository memberRepository,
-      UpdateMemberMapper updateMemberMapper) {
+
+
+  public UpdateMemberCommandHandler(MemberDomainService memberDomainService, UpdateMemberMapper updateMemberMapper) {
     this.memberDomainService = memberDomainService;
-    this.memberRepository = memberRepository;
     this.updateMemberMapper = updateMemberMapper;
   }
+
+
 
   @Override
   public UpdatedMemberResponse handle(UpdateMemberCommand command) {
@@ -39,7 +39,7 @@ public class UpdateMemberCommandHandler implements CommandHandler<UpdateMemberCo
         new Email(command.email()),
         new PhoneNumber(command.phoneNumber()),
         new Address(command.address()));
-    memberRepository.save(updatedMember);
+  
     return updateMemberMapper.toResponse(updatedMember);
   }
 

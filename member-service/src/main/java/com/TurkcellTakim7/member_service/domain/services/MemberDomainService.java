@@ -15,9 +15,6 @@ import com.TurkcellTakim7.member_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
 import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 @Component
 public class MemberDomainService {
 
@@ -46,8 +43,7 @@ public class MemberDomainService {
         if (membershipLevel == null) {
             membershipLevel = MembershipLevel.STANDARD;
         }
-
-        return new Member(
+        Member createdMember = new Member(
                 MemberId.generate(),
                 name,
                 surname,
@@ -56,6 +52,8 @@ public class MemberDomainService {
                 new Address(address),
                 membershipDate,
                 membershipLevel);
+        memberRepository.save(createdMember);
+        return createdMember;
     }
 
     /**
@@ -67,11 +65,10 @@ public class MemberDomainService {
         return existingMember;
     }
 
-
     /**
      * Kayıtlı olan bütün üyeleri getirir.
      */
-    public List<Member> getMemberList(){
+    public List<Member> getMemberList() {
         return memberRepository.getAllMembers();
     }
 
@@ -91,9 +88,19 @@ public class MemberDomainService {
 
         // Üye bilgilerini güncelle
         existingMember.updatePersonalInfo(name, surname, email,
-                phoneNumber,address);
+                phoneNumber, address);
 
+        memberRepository.save(existingMember);
         return existingMember;
+    }
+
+    /**
+     * Member Siler
+     */
+
+    public void deleteById(MemberId id) {
+        getMember(id);
+        memberRepository.deleteById(id);
     }
 
     /**
@@ -146,10 +153,4 @@ public class MemberDomainService {
         return !member.getMembershipLevel().equals(MembershipLevel.BANNED);
     }
 
-    // public void updateMember(MemberId memberId, String name,
-    //     String surname, String email,
-    //     String phoneNumber, String address) {
-      
-    //   throw new UnsupportedOperationException("Unimplemented method 'updateMember'");
-    // }
 }
