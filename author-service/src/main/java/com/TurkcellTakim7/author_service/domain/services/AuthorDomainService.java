@@ -14,6 +14,7 @@ import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorEmail;
 import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorId;
 import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorPhoneNumber;
 
+
 @Component
 public class AuthorDomainService {
 
@@ -66,30 +67,35 @@ public class AuthorDomainService {
         return authorRepository.getAllAuthors(pageIndex, pageSize);
     }
 
-    /**
-     * Author bilgilerini günceller.
-     * 
-     * public Author updateAuthor(AuthorId authorId, String name, String surname,
-     * AuthorEmail email,
-     * AuthorPhoneNumber phoneNumber) {
-     * Author existingAuthor = authorRepository.findById(authorId)
-     * .orElseThrow(() -> new InvalidAuthorException("Author not found: " +
-     * authorId.value()));
-     * 
-     * if (!existingAuthor.getEmail().equals(email) && isEmailAlreadyExists(email))
-     * {
-     * throw new AuthorAlreadyExistsException(email);
-     * }
-     * 
-     * if (!existingAuthor.getPhoneNumber().equals(phoneNumber) &&
-     * isPhoneNumberAlreadyExists(phoneNumber)) {
-     * throw new AuthorAlreadyExistsException(phoneNumber);
-     * }
-     * 
-     * existingAuthor.updatePersonalInfo(name, surname, email, phoneNumber);
-     * return existingAuthor;
-     * }
-     */
+    public Author updateAuthor(AuthorId authorId, String name, String surname,
+            AuthorEmail email,
+            AuthorPhoneNumber phoneNumber) {
+        Author existingAuthor = authorRepository.findById(authorId)
+                .orElseThrow(() -> new InvalidAuthorException("Author not found: " +
+                        authorId.value()));
+
+        if (!existingAuthor.getEmail().equals(email) && isEmailAlreadyExists(email)) {
+            throw new AuthorAlreadyExistsException(email);
+        }
+
+        if (!existingAuthor.getPhoneNumber().equals(phoneNumber) &&
+                isPhoneNumberAlreadyExists(phoneNumber)) {
+            throw new AuthorAlreadyExistsException(phoneNumber);
+        }
+
+        existingAuthor.updatePersonalInfo(name, surname, email, phoneNumber);
+        return existingAuthor;
+    }
+
+    public void deleteAuthor(AuthorId authorId) {
+        Author existingAuthor = authorRepository.findById(authorId)
+                .orElseThrow(() -> new AuthorNotFoundException(authorId));
+    
+        authorRepository.deleteById(authorId);
+    }
+    
+    
+    
 
     // === Yardımcı kontroller ===
     private boolean isEmailAlreadyExists(AuthorEmail email) {
