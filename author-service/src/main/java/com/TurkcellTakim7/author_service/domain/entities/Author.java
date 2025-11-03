@@ -156,4 +156,14 @@ public class Author {
                 ", phoneNumber=" + phoneNumber +
                 '}';
     }
+
+    public void updatePersonalInfo(String name,
+                                   String surname,
+                                   AuthorEmail email,
+                                   AuthorPhoneNumber phoneNumber) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 }
