@@ -40,7 +40,7 @@ public class AuthorRepositoryAdapter implements AuthorRepository {
     }
 
     @Override
-    public List<Author> getAllAuthors() {
+    public List<Author> getAllAuthors(Integer pageIndex, Integer pageSize) {
         return jpaAuthorRepository
                 .findAll()
                 .stream()
