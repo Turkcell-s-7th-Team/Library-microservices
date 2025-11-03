@@ -1,6 +1,7 @@
 package com.TurkcellTakim7.member_service.domain.services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -62,6 +63,15 @@ public class MemberDomainService {
         Member existingMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
         return existingMember;
+    }
+
+
+    /**
+     * Kayıtlı olan bütün üyeleri getirir.
+     */
+
+    public List<Member> getMemberList(){
+        return memberRepository.getAllMembers();
     }
 
     /**
