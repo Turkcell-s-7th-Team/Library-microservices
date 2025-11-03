@@ -1,12 +1,12 @@
 package com.TurkcellTakim7.author_service.domain.repositories;
 
-import com.TurkcellTakim7.author_service.domain.entities.Author;
-import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorId;
-import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorEmail;
-import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorPhoneNumber;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.TurkcellTakim7.author_service.domain.entities.Author;
+import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorEmail;
+import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorId;
+import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorPhoneNumber;
 
 public interface AuthorRepository {
 
@@ -14,7 +14,7 @@ public interface AuthorRepository {
 
     Optional<Author> findById(AuthorId id);
 
-    List<Author> getAllAuthors();
+    List<Author> getAllAuthors(Integer pageIndex, Integer pageSize);
 
     void deleteById(AuthorId id);
 
