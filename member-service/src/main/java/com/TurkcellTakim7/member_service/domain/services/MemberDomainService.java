@@ -55,6 +55,16 @@ public class MemberDomainService {
     }
 
     /**
+     * Kayıtlı bir üyeyi getirir.
+     */
+
+    public Member getMember(MemberId memberId) {
+        Member existingMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException(memberId));
+        return existingMember;
+    }
+
+    /**
      * Üye bilgilerini günceller
      */
     public Member updateMember(MemberId memberId, String name, String surname,

@@ -8,22 +8,33 @@ import com.TurkcellTakim7.member_service.application.dto.CreatedMemberRepsonse;
 import com.TurkcellTakim7.member_service.application.mapper.CreateMemberMapper;
 import com.TurkcellTakim7.member_service.domain.entities.Member;
 import com.TurkcellTakim7.member_service.domain.repositories.MemberRepository;
+import com.TurkcellTakim7.member_service.domain.services.MemberDomainService;
+import com.TurkcellTakim7.member_service.domain.valueobjects.Email;
+import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
 
 @Component
 public class CreateMemberCommandHandler implements CommandHandler<CreateMemberCommand, CreatedMemberRepsonse> {
 
-  private final MemberRepository memberRepository;
   private final CreateMemberMapper createMemberMapper;
+  private final MemberDomainService memberDomainService;
+  private final MemberRepository memberRepository;
 
-  public CreateMemberCommandHandler(MemberRepository memberRepository, CreateMemberMapper createMemberMapper) {
-    this.memberRepository = memberRepository;
+  public CreateMemberCommandHandler(CreateMemberMapper createMemberMapper, MemberDomainService memberDomainService,
+      MemberRepository memberRepository) {
     this.createMemberMapper = createMemberMapper;
+    this.memberDomainService = memberDomainService;
+    this.memberRepository = memberRepository;
   }
 
   public CreatedMemberRepsonse handle(CreateMemberCommand command) {
-    Member member = createMemberMapper.toDomain(command);
+    Member member = memberDomainService.createMember(
+        command.name(),
+        command.surname(),
+        new Email(command.email()),
+        command.phoneNumber(),
+        command.address(),
+        new MembershipLevel(command.membershipLevel()));
     member = memberRepository.save(member);
-
     return createMemberMapper.toResponse(member);
   }
 }
