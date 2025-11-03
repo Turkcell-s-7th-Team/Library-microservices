@@ -15,6 +15,9 @@ import com.TurkcellTakim7.member_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
 import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 @Component
 public class MemberDomainService {
 
@@ -58,7 +61,6 @@ public class MemberDomainService {
     /**
      * Kayıtlı bir üyeyi getirir.
      */
-
     public Member getMember(MemberId memberId) {
         Member existingMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
@@ -69,7 +71,6 @@ public class MemberDomainService {
     /**
      * Kayıtlı olan bütün üyeleri getirir.
      */
-
     public List<Member> getMemberList(){
         return memberRepository.getAllMembers();
     }
@@ -78,7 +79,7 @@ public class MemberDomainService {
      * Üye bilgilerini günceller
      */
     public Member updateMember(MemberId memberId, String name, String surname,
-            Email email, String phoneNumber, String address) {
+            Email email, PhoneNumber phoneNumber, Address address) {
 
         Member existingMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
@@ -90,8 +91,7 @@ public class MemberDomainService {
 
         // Üye bilgilerini güncelle
         existingMember.updatePersonalInfo(name, surname, email,
-                new PhoneNumber(phoneNumber),
-                new Address(address));
+                phoneNumber,address);
 
         return existingMember;
     }
@@ -145,4 +145,11 @@ public class MemberDomainService {
 
         return !member.getMembershipLevel().equals(MembershipLevel.BANNED);
     }
+
+    // public void updateMember(MemberId memberId, String name,
+    //     String surname, String email,
+    //     String phoneNumber, String address) {
+      
+    //   throw new UnsupportedOperationException("Unimplemented method 'updateMember'");
+    // }
 }
