@@ -33,9 +33,9 @@ public class MemberController {
 
   private final CommandHandler<CreateMemberCommand, CreatedMemberRepsonse> createMemberCommandHandler;
   private final CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> updateMemberCommandHandler;
+  private final CommandHandler<DeleteMemberCommand, Void> deleteMemberCommandHandler;
   private final QueryHandler<GetMemberQuery, MemberResponse> getMemberQueryHandler;
   private final QueryHandler<GetMemberListQuery, List<MemberResponse>> getMemberListQueryHandler;
-  private final CommandHandler<DeleteMemberCommand, Void> deleteMemberCommandHandler;
 
   public MemberController(CommandHandler<CreateMemberCommand, CreatedMemberRepsonse> createMemberCommandHandler,
       CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> updateMemberCommandHandler,
