@@ -1,5 +1,7 @@
 package com.TurkcellTakim7.book_service.domain.entities;
 
+import java.util.Objects;
+
 import com.TurkcellTakim7.book_service.domain.valueobjects.AvailableCopies;
 import com.TurkcellTakim7.book_service.domain.valueobjects.BookId;
 import com.TurkcellTakim7.book_service.domain.valueobjects.BookTitle;
@@ -13,7 +15,7 @@ public class Book {
 
   private final BookId bookId;
   private BookTitle bookTitle;
-  private final CategoryId categoryId;
+  private CategoryId categoryId;
   private AvailableCopies availableCopies;
   private CopiesCount copiesCount;
   private final ISBN isbn;
@@ -32,12 +34,24 @@ public class Book {
     this.publishYear = publishYear;
   }
 
-  public static Book create() {
-    return null;
+  public static Book create(BookTitle bookTitle, CategoryId categoryId, AvailableCopies availableCopies,
+      CopiesCount copiesCount, ISBN isbn, PublisherId publisherId, PublishYear publishYear) {
+    return new Book(
+        BookId.generate(),
+        Objects.requireNonNull(bookTitle),
+        Objects.requireNonNull(categoryId),
+        Objects.requireNonNull(availableCopies),
+        Objects.requireNonNull(copiesCount),
+        Objects.requireNonNull(isbn),
+        Objects.requireNonNull(publisherId),
+        Objects.requireNonNull(publishYear));
   };
 
-  public static Book rehydrate() {
-    return null;
+  public static Book rehydrate(BookId bookId, BookTitle bookTitle, CategoryId categoryId,
+      AvailableCopies availableCopies,
+      CopiesCount copiesCount, ISBN isbn, PublisherId publisherId, PublishYear publishYear) {
+    return new Book(bookId, bookTitle, categoryId, availableCopies, copiesCount, isbn, publisherId,
+        publishYear);
   }
 
   public BookId getBookId() {
@@ -73,20 +87,16 @@ public class Book {
   };
 
   // Business Methods
- 
-
   public void borrow() {
     this.availableCopies = this.availableCopies.decrease();
   }
 
   public void returnBack() {
-    this.availableCopies = this.availableCopies.increase(this.copiesCount.value());
+    this.availableCopies = this.availableCopies.increase();
   }
 
   public void addCopies(int amount) {
-    if (amount <= 0) {
-      throw new IllegalArgumentException("Amount must be positive");
-    }
+
     CopiesCount nextTotal = this.copiesCount.addCopies(amount);
     if (this.availableCopies.value() > nextTotal.value()) {
       throw new IllegalStateException("Available copies cannot exceed total copies");
@@ -95,31 +105,19 @@ public class Book {
   }
 
   public void removeCopies(int amount) {
-    if (amount <= 0) {
-      throw new IllegalArgumentException("Amount must be positive");
-    }
-    int nextTotal = this.copiesCount.value() - amount;
-    if (nextTotal < 0) {
-      throw new IllegalStateException("Total copies cannot be negative");
-    }
-    if (this.availableCopies.value() > nextTotal) {
+    CopiesCount nextTotal = this.copiesCount.removeCopies(amount);
+    if (this.availableCopies.value() > nextTotal.value()) {
       throw new IllegalStateException("Cannot reduce total below available copies");
     }
-    this.copiesCount = new CopiesCount(nextTotal);
+    this.copiesCount = nextTotal;
   }
 
   public void updateTitle(BookTitle newTitle) {
     this.bookTitle = newTitle;
   }
 
-  public void updateCategory() {
-  };
-
-  public void addCopies(Integer amount) {
-    addCopies(amount.intValue());
-  };
-
-  public void removeCopies(Integer amount) {
-    removeCopies(amount.intValue());
-  };
+  public void updateCategory(CategoryId newCategoryId) {
+    Objects.requireNonNull(newCategoryId, "CategoryId cannot be null!");
+    this.categoryId = newCategoryId;
+  }
 }

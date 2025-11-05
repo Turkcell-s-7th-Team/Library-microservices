@@ -1,5 +1,7 @@
 package com.TurkcellTakim7.book_service.domain.valueobjects;
 
+import com.TurkcellTakim7.book_service.domain.exceptions.NoAvailableCopiesException;
+
 public record AvailableCopies(int value) {
 
     public AvailableCopies {
@@ -8,16 +10,13 @@ public record AvailableCopies(int value) {
         }
     }
 
-    public AvailableCopies increase(int maxTotal) {
-        if (value + 1 > maxTotal) {
-            throw new IllegalStateException("Available copies cannot exceed total copies!");
-        }
+    public AvailableCopies increase() {
         return new AvailableCopies(value + 1);
     }
 
     public AvailableCopies decrease() {
-        if (value == 0) {
-            throw new IllegalStateException("There are no available copies to borrow!");
+        if (value - 1 < 0) {
+            throw new NoAvailableCopiesException();
         }
         return new AvailableCopies(value - 1);
     }

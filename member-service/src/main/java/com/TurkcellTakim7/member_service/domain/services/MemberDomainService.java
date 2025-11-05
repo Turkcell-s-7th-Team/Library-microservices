@@ -30,30 +30,22 @@ public class MemberDomainService {
     public Member createMember(String name, String surname, Email email,
             String phoneNumber, String address,
             MembershipLevel membershipLevel) {
-
-        // Email benzersizlik kontrolü
         if (isEmailAlreadyExists(email)) {
             throw new EmailAlreadyExistsException(email);
         }
-
-        // Varsayılan üyelik tarihi bugün
-        LocalDate membershipDate = LocalDate.now();
-
-        // Varsayılan üyelik seviyesi STANDARD
         if (membershipLevel == null) {
             membershipLevel = MembershipLevel.STANDARD;
         }
-        Member createdMember = new Member(
-                MemberId.generate(),
+        Member member = Member.create(
                 name,
                 surname,
                 email,
                 new PhoneNumber(phoneNumber),
                 new Address(address),
-                membershipDate,
+                LocalDate.now(),
                 membershipLevel);
-        memberRepository.save(createdMember);
-        return createdMember;
+        memberRepository.save(member);
+        return member;
     }
 
     /**
