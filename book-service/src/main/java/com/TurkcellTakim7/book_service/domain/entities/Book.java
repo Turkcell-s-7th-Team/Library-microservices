@@ -19,8 +19,8 @@ public class Book {
   private AvailableCopies availableCopies;
   private CopiesCount copiesCount;
   private final ISBN isbn;
-  private final PublisherId publisherId;
-  private final PublishYear publishYear;
+  private PublisherId publisherId;
+  private PublishYear publishYear;
 
   public Book(BookId bookId, BookTitle bookTitle, CategoryId categoryId, AvailableCopies availableCopies,
       CopiesCount copiesCount, ISBN isbn, PublisherId publisherId, PublishYear publishYear) {
@@ -88,11 +88,17 @@ public class Book {
 
   // Business Methods
   public void borrow() {
-    this.availableCopies = this.availableCopies.decrease();
+    if (this.availableCopies.value() <= 0) {
+      throw new IllegalStateException("No available copies to borrow");
+    }
+    this.availableCopies = this.availableCopies.borrow();
   }
 
   public void returnBack() {
-    this.availableCopies = this.availableCopies.increase();
+    if (this.availableCopies.value() >= this.copiesCount.value()) {
+      throw new IllegalStateException("Cannot return more copies than total copies");
+    }
+    this.availableCopies = this.availableCopies.returnBack();
   }
 
   public void addCopies(int amount) {
@@ -112,6 +118,16 @@ public class Book {
     this.copiesCount = nextTotal;
   }
 
+  public void increaseAvailable(int delta) {
+    AvailableCopies nextAvailableCopies = this.availableCopies.increase(delta);
+    this.availableCopies = nextAvailableCopies;
+  }
+
+  public void decreaseAvailable(int delta) {
+    AvailableCopies nextAvailableCopies = this.availableCopies.decrease(delta);
+    this.availableCopies = nextAvailableCopies;
+  }
+
   public void updateTitle(BookTitle newTitle) {
     this.bookTitle = newTitle;
   }
@@ -120,4 +136,28 @@ public class Book {
     Objects.requireNonNull(newCategoryId, "CategoryId cannot be null!");
     this.categoryId = newCategoryId;
   }
+
+  public void updateBook(BookTitle bookTitle, CategoryId categoryId,
+      AvailableCopies availableCopies,
+      CopiesCount copiesCount, PublisherId publisherId, PublishYear publishYear) {
+
+    Objects.requireNonNull(bookTitle, "BookTitle cannot be null");
+    Objects.requireNonNull(categoryId, "CategoryId cannot be null");
+    Objects.requireNonNull(availableCopies, "AvailableCopies cannot be null");
+    Objects.requireNonNull(copiesCount, "CopiesCount cannot be null");
+    Objects.requireNonNull(publisherId, "PublisherId cannot be null");
+    Objects.requireNonNull(publishYear, "PublishYear cannot be null");
+
+    if (availableCopies.value() > copiesCount.value()) {
+      throw new IllegalStateException("Available copies cannot exceed total copies");
+    }
+
+    this.bookTitle = bookTitle;
+    this.categoryId = categoryId;
+    this.availableCopies = availableCopies;
+    this.copiesCount = copiesCount;
+    this.publisherId = publisherId;
+    this.publishYear = publishYear;
+  }
+
 }

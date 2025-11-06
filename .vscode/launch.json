@@ -38,6 +38,17 @@
       "cwd": "${workspaceFolder}",
       "mainClass": "com.TurkcellTakim7.member_service.MemberServiceApplication",
       "projectName": "member-service",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=59099 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=member-service"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-BookServiceApplication<book-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.book_service.BookServiceApplication",
+      "projectName": "book-service",
+      "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
   ]
