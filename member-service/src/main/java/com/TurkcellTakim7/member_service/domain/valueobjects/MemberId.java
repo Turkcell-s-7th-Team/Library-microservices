@@ -7,7 +7,7 @@ import java.util.UUID;
 public record MemberId(UUID value) implements Serializable {
 
     public MemberId {
-        Objects.requireNonNull(value, "Value for ProductId cannot be null");
+        Objects.requireNonNull(value, "Value for MemberId cannot be null");
     }
 
     public static MemberId generate() {
