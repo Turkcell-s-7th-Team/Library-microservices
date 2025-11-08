@@ -79,7 +79,6 @@ public class MemberDomainService {
         existingMember.updatePersonalInfo(name, surname, email,
                 phoneNumber, address);
 
-        memberRepository.save(existingMember);
         return existingMember;
     }
 

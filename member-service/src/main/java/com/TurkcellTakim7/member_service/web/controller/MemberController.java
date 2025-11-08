@@ -17,7 +17,7 @@ import com.TurkcellTakim7.member_service.application.commands.DeleteMemberComman
 import com.TurkcellTakim7.member_service.application.commands.UpdateMemberCommand;
 import com.TurkcellTakim7.member_service.application.core.CommandHandler;
 import com.TurkcellTakim7.member_service.application.core.QueryHandler;
-import com.TurkcellTakim7.member_service.application.dto.CreatedMemberRepsonse;
+import com.TurkcellTakim7.member_service.application.dto.CreatedMemberResponse;
 import com.TurkcellTakim7.member_service.application.dto.MemberResponse;
 import com.TurkcellTakim7.member_service.application.dto.UpdateMemberRequest;
 import com.TurkcellTakim7.member_service.application.dto.UpdatedMemberResponse;
@@ -31,13 +31,13 @@ import jakarta.validation.Valid;
 
 public class MemberController {
 
-  private final CommandHandler<CreateMemberCommand, CreatedMemberRepsonse> createMemberCommandHandler;
+  private final CommandHandler<CreateMemberCommand, CreatedMemberResponse> createMemberCommandHandler;
   private final CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> updateMemberCommandHandler;
   private final CommandHandler<DeleteMemberCommand, Void> deleteMemberCommandHandler;
   private final QueryHandler<GetMemberQuery, MemberResponse> getMemberQueryHandler;
   private final QueryHandler<GetMemberListQuery, List<MemberResponse>> getMemberListQueryHandler;
 
-  public MemberController(CommandHandler<CreateMemberCommand, CreatedMemberRepsonse> createMemberCommandHandler,
+  public MemberController(CommandHandler<CreateMemberCommand, CreatedMemberResponse> createMemberCommandHandler,
       CommandHandler<UpdateMemberCommand, UpdatedMemberResponse> updateMemberCommandHandler,
       QueryHandler<GetMemberQuery, MemberResponse> getMemberQueryHandler,
       QueryHandler<GetMemberListQuery, List<MemberResponse>> getMemberListQueryHandler,
@@ -60,7 +60,7 @@ public class MemberController {
   }
 
   @PostMapping
-  public CreatedMemberRepsonse createMember(@RequestBody CreateMemberCommand command) {
+  public CreatedMemberResponse createMember(@RequestBody CreateMemberCommand command) {
     return createMemberCommandHandler.handle(command);
   }
 

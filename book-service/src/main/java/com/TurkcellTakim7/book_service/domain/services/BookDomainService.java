@@ -57,14 +57,9 @@ public class BookDomainService {
   }
 
   public Book updateBook(BookId bookId, BookTitle bookTitle, CategoryId categoryId, AvailableCopies availableCopies,
-      CopiesCount copiesCount, ISBN isbn, PublisherId publisherId, PublishYear publishYear) {
+      CopiesCount copiesCount, PublisherId publisherId, PublishYear publishYear) {
     Book existingBook = bookRepository.findById(bookId).orElseThrow(
         () -> new BookNotFoundException(bookId));
-
-    // ISBN değişiyorsa ve başka bir kitapta kullanılıyorsa hata ver
-    if (!existingBook.getIsbn().equals(isbn) && isIsbnAlreadyExist(isbn)) {
-      throw new IsbnAlreadyExistException();
-    }
 
     if (availableCopies.value() > copiesCount.value()) {
       throw new InvalidCopiesCountException();
@@ -76,7 +71,6 @@ public class BookDomainService {
 
     existingBook.updateBook(bookTitle, categoryId, availableCopies, copiesCount, publisherId, publishYear);
 
-    bookRepository.save(existingBook);
     return existingBook;
 
   }

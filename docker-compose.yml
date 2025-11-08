@@ -14,5 +14,19 @@ services:
     volumes:
       - memberdb_vol:/var/lib/postgresql/data
 
+  booksv_db:
+    container_name: booksv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: book_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: bookservice_db_password
+    ports:
+      - "5439:5432"
+    volumes:
+      - bookdb_vol:/var/lib/postgresql/data
+
 volumes:
   memberdb_vol:
+  bookdb_vol:

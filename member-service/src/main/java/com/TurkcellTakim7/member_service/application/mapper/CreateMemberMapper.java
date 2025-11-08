@@ -3,7 +3,7 @@ package com.TurkcellTakim7.member_service.application.mapper;
 import org.springframework.stereotype.Component;
 
 import com.TurkcellTakim7.member_service.application.commands.CreateMemberCommand;
-import com.TurkcellTakim7.member_service.application.dto.CreatedMemberRepsonse;
+import com.TurkcellTakim7.member_service.application.dto.CreatedMemberResponse;
 import com.TurkcellTakim7.member_service.domain.entities.Member;
 import com.TurkcellTakim7.member_service.domain.valueobjects.Address;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
@@ -22,8 +22,8 @@ public class CreateMemberMapper {
         new MembershipLevel(command.membershipLevel()));
   }
 
-  public CreatedMemberRepsonse toResponse(Member member) {
-    return new CreatedMemberRepsonse(
+  public CreatedMemberResponse toResponse(Member member) {
+    return new CreatedMemberResponse(
         member.getName(),
         member.getSurname(),
         member.getEmail().toString(),
