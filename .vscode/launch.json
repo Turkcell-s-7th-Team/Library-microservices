@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     {
       "type": "java",
       "name": "Spring Boot - ConfigServerApplication <config-server>",
@@ -58,6 +59,16 @@
       "cwd": "${workspaceFolder}",
       "mainClass": "com.TurkcellTakim7.author_service.AuthorServiceApplication",
       "projectName": "author-service",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+    {
+      "type": "java",
+      "name": "Spring Boot-StaffServiceApplication<staff-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.staff_service.StaffServiceApplication",
+      "projectName": "Staff-service",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
