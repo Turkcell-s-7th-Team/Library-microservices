@@ -27,9 +27,6 @@ services:
     volumes:
       - bookdb_vol:/var/lib/postgresql/data
 
-volumes:
-  memberdb_vol:
-  bookdb_vol:
   authorsv_db:
     container_name: authorsv_db
     image: postgres:16
@@ -37,12 +34,13 @@ volumes:
     environment:
       POSTGRES_DB: author_service
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: authorservice_db_password
+      POSTGRES_PASSWORD:    
     ports:
-      - "5439:5432"
+      - "5437:5432"
     volumes:
       - authordb_vol:/var/lib/postgresql/data
 
 volumes:
   memberdb_vol:
+  bookdb_vol:
   authordb_vol:
