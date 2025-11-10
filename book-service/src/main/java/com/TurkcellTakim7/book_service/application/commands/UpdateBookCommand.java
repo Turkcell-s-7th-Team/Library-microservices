@@ -11,11 +11,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UpdateBookCommand(
-    @NotNull UUID bookId,
-    @NotBlank @Size(min = 1, max = 255) String title,
-    @NotNull @Min(0) Integer availableCopies,
-    @NotNull @Min(1) Integer copiesCount,
-    @NotNull UUID categoryId,
-    @NotNull UUID publisherId,
-    @NotNull @Min(1) Integer publishYear) implements Command<UpdatedBookResponse> {
+        @NotNull UUID bookId,
+        @NotBlank @Size(min = 1, max = 255) String title,
+        @NotNull @Min(0) Integer availableCopies,
+        @NotNull @Min(1) Integer copiesCount,
+        @NotNull UUID categoryId,
+        @NotNull UUID publisherId,
+        @NotNull @Min(1) Integer publishYear) implements Command<UpdatedBookResponse> {
 }

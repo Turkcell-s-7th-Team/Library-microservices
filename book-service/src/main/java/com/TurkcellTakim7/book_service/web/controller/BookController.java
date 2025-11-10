@@ -20,11 +20,14 @@ import com.TurkcellTakim7.book_service.application.commands.DeleteBookCommand;
 import com.TurkcellTakim7.book_service.application.commands.UpdateBookCommand;
 import com.TurkcellTakim7.book_service.application.dto.BookResponse;
 import com.TurkcellTakim7.book_service.application.dto.CreatedBookResponse;
+import com.TurkcellTakim7.book_service.application.dto.UpdateBookRequest;
 import com.TurkcellTakim7.book_service.application.dto.UpdatedBookResponse;
 import com.TurkcellTakim7.book_service.application.queries.GetBookByIdQuery;
 import com.TurkcellTakim7.book_service.application.queries.GetBookListQuery;
 import com.TurkcellTakim7.book_service.application.queryHandler.GetBookByIdQueryHandler;
 import com.TurkcellTakim7.book_service.application.queryHandler.GetBookListQueryHandler;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/books")
@@ -62,7 +65,19 @@ public class BookController {
   }
 
   @PutMapping("/{id}")
-  public UpdatedBookResponse updateBook(@RequestBody UpdateBookCommand command) {
+  public UpdatedBookResponse updateBook(
+      @PathVariable UUID id,
+      @RequestBody @Valid UpdateBookRequest request) {
+
+    UpdateBookCommand command = new UpdateBookCommand(
+        id,
+        request.title(),
+        request.availableCopies(),
+        request.copiesCount(),
+        request.categoryId(),
+        request.publisherId(),
+        request.publishYear());
+
     return updateBookCommandHandler.handle(command);
   }
 
