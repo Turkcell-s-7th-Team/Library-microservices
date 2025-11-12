@@ -13,4 +13,7 @@ public interface SpringDataStaffRepository extends JpaRepository<JpaStaffEntity,
     List<JpaStaffEntity> findByNameContaining(String name);
 
     Optional<JpaStaffEntity> findByPhoneNumber(String phoneNumber);
+
+    public boolean existsByPhone(String phone);
+
 }

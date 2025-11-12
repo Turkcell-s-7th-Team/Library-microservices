@@ -3,30 +3,31 @@ package com.TurkcellTakim7.staff_service.domain.entities;
 import java.util.Objects;
 
 import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffId;
+import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffPhone;
 
 public class Staff {
 
     private final StaffId staffId;
     private String name;
     private String surname;
-    private String staffPhone;
+    private StaffPhone staffPhone;
 
-    private Staff(StaffId staffId, String name, String surname, String staffPhone) {
+    private Staff(StaffId staffId, String name, String surname, StaffPhone staffPhone) {
         this.staffId = Objects.requireNonNull(staffId, "StaffId cannot be null");
         this.name = validateName(name);
         this.surname = validateName(surname);
-        this.staffPhone = validatePhone(staffPhone);
+        this.staffPhone = Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
     }
 
     // Factory Methods
-    public static Staff create(String name, String surname, String staffPhone) {
+    public static Staff create(String name, String surname, StaffPhone staffPhone) {
         validateName(name);
         validateName(surname);
         validatePhone(staffPhone);
         return new Staff(StaffId.generate(), name, surname, staffPhone);
     }
 
-    public static Staff rehydrate(StaffId staffId, String name, String surname, String staffPhone) {
+    public static Staff rehydrate(StaffId staffId, String name, String surname, StaffPhone staffPhone) {
         return new Staff(staffId, name, surname, staffPhone);
     }
 
@@ -43,7 +44,7 @@ public class Staff {
         return surname;
     }
 
-    public String getStaffPhone() {
+    public StaffPhone getStaffPhone() {
         return staffPhone;
     }
 
@@ -55,7 +56,7 @@ public class Staff {
     public void updatePersonalInfo(String name, String surname, String staffPhone) {
         this.name = validateName(name);
         this.surname = validateName(surname);
-        this.staffPhone = validatePhone(staffPhone);
+        this.staffPhone = Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
     }
 
     // Validation Methods

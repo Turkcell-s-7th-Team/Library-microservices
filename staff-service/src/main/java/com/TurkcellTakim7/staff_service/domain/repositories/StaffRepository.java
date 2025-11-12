@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.TurkcellTakim7.staff_service.domain.entities.Staff;
 import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffId;
+import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffPhone;
 
 public interface StaffRepository {
 
@@ -23,4 +24,6 @@ public interface StaffRepository {
     void deleteById(StaffId staffId);
 
     boolean existsByPhone(String phone);
+
+    Optional<Staff> findByPhone(StaffPhone phone);
 }

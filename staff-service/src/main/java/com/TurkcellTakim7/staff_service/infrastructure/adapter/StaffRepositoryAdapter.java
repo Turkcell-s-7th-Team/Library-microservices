@@ -40,7 +40,7 @@ public class StaffRepositoryAdapter implements StaffRepository {
 
     @Override
     public Optional<Staff> findByPhone(StaffPhone phone) {
-        return springDataStaffRepository.findByPhone(phone.value())
+        return springDataStaffRepository.findByPhoneNumber(phone.value())
                 .map(staffEntityMapper::toDomain);
     }
 
@@ -66,7 +66,7 @@ public class StaffRepositoryAdapter implements StaffRepository {
     }
 
     @Override
-    public boolean existsByPhone(StaffPhone phone) {
-        return springDataStaffRepository.existsByPhone(phone.value());
+    public boolean existsByPhone(String phone) {
+        return springDataStaffRepository.existsByPhone(phone);
     }
 }
