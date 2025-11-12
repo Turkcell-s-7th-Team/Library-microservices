@@ -52,6 +52,7 @@ public class StaffDomainService {
      * Staff bilgilerini günceller
      */
     public Staff updateStaff(StaffId staffId, String name, String surname, String phone) {
+       
         Staff existingStaff = staffRepository.findById(staffId)
                 .orElseThrow(() -> new StaffNotFoundException(staffId));
 
@@ -63,6 +64,7 @@ public class StaffDomainService {
         }
 
         existingStaff.updatePersonalInfo(name, surname, newStaffPhone);
+        
         staffRepository.save(existingStaff);
         return existingStaff;
     }
