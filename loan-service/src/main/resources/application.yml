@@ -2,5 +2,25 @@ spring:
   application:
     name: loan-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5440/loan_service
+    username: postgres
+    password: loanservice_db_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server:
   port: 8084
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
