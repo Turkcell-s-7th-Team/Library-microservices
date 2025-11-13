@@ -13,6 +13,19 @@ services:
     volumes:
       - memberdb_vol:/var/lib/postgresql/data
 
+  booksv_db:
+    container_name: booksv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: book_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: bookservice_db_password
+    ports:
+      - "5439:5432"
+    volumes:
+      - bookdb_vol:/var/lib/postgresql/data
+
   authorsv_db:
     container_name: authorsv_db
     image: postgres:16
@@ -22,11 +35,25 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: authorservice_db_password
     ports:
-      - "5439:5432"
+      - "5437:5432"
     volumes:
       - authordb_vol:/var/lib/postgresql/data
 
-  loansv_db:
+ 
+  staffsv_db:
+    container_name: staffsv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: staff_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: staffservice_db_password
+    ports:
+      - "5442:5432"
+    volumes:
+      - staffdb_vol:/var/lib/postgresql/data
+      
+ loansv_db:
     container_name: loansv_db
     image: postgres:16
     restart: always
@@ -41,5 +68,10 @@ services:
 
 volumes:
   memberdb_vol:
+  bookdb_vol:
   authordb_vol:
+  staffdb_vol:
   loandb_vol:
+  
+
+  

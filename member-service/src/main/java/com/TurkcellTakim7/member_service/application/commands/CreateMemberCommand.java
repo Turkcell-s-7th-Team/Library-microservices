@@ -3,7 +3,7 @@ package com.TurkcellTakim7.member_service.application.commands;
 import java.time.LocalDate;
 
 import com.TurkcellTakim7.member_service.application.core.Command;
-import com.TurkcellTakim7.member_service.application.dto.CreatedMemberRepsonse;
+import com.TurkcellTakim7.member_service.application.dto.CreatedMemberResponse;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -18,4 +18,4 @@ public record CreateMemberCommand(
         @NotBlank String address,
         @NotNull LocalDate membershipDate,
         @NotBlank String membershipLevel
-) implements Command<CreatedMemberRepsonse>{}
+) implements Command<CreatedMemberResponse>{}

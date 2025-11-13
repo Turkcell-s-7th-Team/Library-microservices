@@ -3,7 +3,7 @@ spring:
     name: author-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5439/author_service
+    url: jdbc:postgresql://localhost:5437/author_service
     username: postgres
     password: authorservice_db_password
     driver-class-name: org.postgresql.Driver

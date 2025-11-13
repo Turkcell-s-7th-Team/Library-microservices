@@ -13,7 +13,5 @@
     <file url="file://$PROJECT_DIR$/publisher-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/reservation-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/staff-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../microservice/config-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../newMicroserviceProject/config-server/src/main/java" charset="UTF-8" />
   </component>
 </project>

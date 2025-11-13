@@ -1,8 +1,7 @@
 package com.TurkcellTakim7.member_service.domain.services;
 
 import java.time.LocalDate;
-
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 import com.TurkcellTakim7.member_service.domain.entities.Member;
 import com.TurkcellTakim7.member_service.domain.exceptions.EmailAlreadyExistsException;
@@ -14,7 +13,6 @@ import com.TurkcellTakim7.member_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.member_service.domain.valueobjects.MembershipLevel;
 import com.TurkcellTakim7.member_service.domain.valueobjects.PhoneNumber;
 
-@Component
 public class MemberDomainService {
 
     private final MemberRepository memberRepository;
@@ -29,36 +27,45 @@ public class MemberDomainService {
     public Member createMember(String name, String surname, Email email,
             String phoneNumber, String address,
             MembershipLevel membershipLevel) {
-
-        // Email benzersizlik kontrolü
         if (isEmailAlreadyExists(email)) {
             throw new EmailAlreadyExistsException(email);
         }
-
-        // Varsayılan üyelik tarihi bugün
-        LocalDate membershipDate = LocalDate.now();
-
-        // Varsayılan üyelik seviyesi STANDARD
         if (membershipLevel == null) {
             membershipLevel = MembershipLevel.STANDARD;
         }
-
-        return new Member(
-                MemberId.generate(),
+        Member member = Member.create(
                 name,
                 surname,
                 email,
                 new PhoneNumber(phoneNumber),
                 new Address(address),
-                membershipDate,
+                LocalDate.now(),
                 membershipLevel);
+        memberRepository.save(member);
+        return member;
+    }
+
+    /**
+     * Kayıtlı bir üyeyi getirir.
+     */
+    public Member getMember(MemberId memberId) {
+        Member existingMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException(memberId));
+        return existingMember;
+    }
+
+    /**
+     * Kayıtlı olan bütün üyeleri getirir.
+     */
+    public List<Member> getMemberList() {
+        return memberRepository.getAllMembers();
     }
 
     /**
      * Üye bilgilerini günceller
      */
     public Member updateMember(MemberId memberId, String name, String surname,
-            Email email, String phoneNumber, String address) {
+            Email email, PhoneNumber phoneNumber, Address address) {
 
         Member existingMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
@@ -70,10 +77,18 @@ public class MemberDomainService {
 
         // Üye bilgilerini güncelle
         existingMember.updatePersonalInfo(name, surname, email,
-                new PhoneNumber(phoneNumber),
-                new Address(address));
+                phoneNumber, address);
 
         return existingMember;
+    }
+
+    /**
+     * Member Siler
+     */
+
+    public void deleteById(MemberId id) {
+        getMember(id);
+        memberRepository.deleteById(id);
     }
 
     /**
@@ -125,4 +140,5 @@ public class MemberDomainService {
 
         return !member.getMembershipLevel().equals(MembershipLevel.BANNED);
     }
+
 }

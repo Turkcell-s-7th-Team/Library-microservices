@@ -2,6 +2,19 @@ spring:
   application:
     name: book-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5439/book_service
+    username: postgres
+    password: bookservice_db_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server:
   port: 8081
 
