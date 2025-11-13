@@ -12,6 +12,7 @@ public class Staff {
     private String surname;
     private StaffPhone staffPhone;
 
+    // Private constructor
     private Staff(StaffId staffId, String name, String surname, StaffPhone staffPhone) {
         this.staffId = Objects.requireNonNull(staffId, "StaffId cannot be null");
         this.name = validateName(name);
@@ -21,13 +22,18 @@ public class Staff {
 
     // Factory Methods
     public static Staff create(String name, String surname, StaffPhone staffPhone) {
-        validateName(name);
-        validateName(surname);
-        validatePhone(staffPhone);
-        return new Staff(StaffId.generate(), name, surname, staffPhone);
+        // Name & surname validation entity içinde
+        String validatedName = validateName(name);
+        String validatedSurname = validateName(surname);
+
+        // Phone zaten StaffPhone VO olduğu için kendi içinde validate ediliyor
+        Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
+
+        return new Staff(StaffId.generate(), validatedName, validatedSurname, staffPhone);
     }
 
     public static Staff rehydrate(StaffId staffId, String name, String surname, StaffPhone staffPhone) {
+        // Rehydrate genelde DB’den yüklerken kullanılır; yine de null check iyidir
         return new Staff(staffId, name, surname, staffPhone);
     }
 
@@ -53,7 +59,7 @@ public class Staff {
     }
 
     // Business Methods
-    public void updatePersonalInfo(String name, String surname, String staffPhone) {
+    public void updatePersonalInfo(String name, String surname, StaffPhone staffPhone) {
         this.name = validateName(name);
         this.surname = validateName(surname);
         this.staffPhone = Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
@@ -62,19 +68,16 @@ public class Staff {
     // Validation Methods
     private static String validateName(String name) {
         Objects.requireNonNull(name, "Name cannot be null");
-        if (name.trim().isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
-        if (name.length() < 2) throw new IllegalArgumentException("Name must be at least 2 characters long");
-        if (name.length() > 50) throw new IllegalArgumentException("Name cannot exceed 50 characters");
+        if (name.trim().isEmpty())
+            throw new IllegalArgumentException("Name cannot be empty");
+        if (name.length() < 2)
+            throw new IllegalArgumentException("Name must be at least 2 characters long");
+        if (name.length() > 50)
+            throw new IllegalArgumentException("Name cannot exceed 50 characters");
         return name.trim();
     }
 
-    private static String validatePhone(String phone) {
-        Objects.requireNonNull(phone, "Staff phone cannot be null");
-        if (!phone.matches("\\+?[0-9]{10,15}")) {
-            throw new IllegalArgumentException("Invalid phone format");
-        }
-        return phone.trim();
-    }
+    // Artık validatePhone yok; telefon validasyonu StaffPhone içinde olmalı
 
     // Equality
     @Override
