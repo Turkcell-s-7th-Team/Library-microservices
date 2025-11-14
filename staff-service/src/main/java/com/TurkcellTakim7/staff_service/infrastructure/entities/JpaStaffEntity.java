@@ -1,6 +1,10 @@
 package com.TurkcellTakim7.staff_service.infrastructure.entities;
-
 import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "staff")
@@ -10,7 +14,7 @@ public class JpaStaffEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    DbColumn(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "surname", nullable = false, length = 50)

@@ -7,6 +7,8 @@ import com.TurkcellTakim7.staff_service.domain.exceptions.StaffAlreadyExistsExce
 import com.TurkcellTakim7.staff_service.domain.exceptions.StaffNotFoundException;
 import com.TurkcellTakim7.staff_service.domain.repositories.StaffRepository;
 import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffId;
+import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffPhone;
+
 
 public class StaffDomainService {
 
@@ -20,11 +22,13 @@ public class StaffDomainService {
      * Yeni bir staff oluşturur ve phone benzersizliğini kontrol eder
      */
     public Staff createStaff(String name, String surname, String phone) {
-        if (isPhoneAlreadyExists(phone)) {
+        StaffPhone staffPhone = new StaffPhone(phone);
+
+        if (isPhoneAlreadyExists(staffPhone)) {
             throw new StaffAlreadyExistsException(phone);
         }
 
-        Staff staff = Staff.create(name, surname, phone);
+        Staff staff = Staff.create(name, surname, staffPhone);
         staffRepository.save(staff);
         return staff;
     }
@@ -48,15 +52,19 @@ public class StaffDomainService {
      * Staff bilgilerini günceller
      */
     public Staff updateStaff(StaffId staffId, String name, String surname, String phone) {
+       
         Staff existingStaff = staffRepository.findById(staffId)
                 .orElseThrow(() -> new StaffNotFoundException(staffId));
 
-        // Phone değişiyorsa benzersizlik kontrolü
-        if (!existingStaff.getStaffPhone().equals(phone) && isPhoneAlreadyExists(phone)) {
+                StaffPhone newStaffPhone = new StaffPhone(phone);
+        
+                // Phone değişiyorsa benzersizlik kontrolü
+        if (!existingStaff.getStaffPhone().equals(newStaffPhone) && isPhoneAlreadyExists(newStaffPhone)) {
             throw new StaffAlreadyExistsException(phone);
         }
 
-        existingStaff.updatePersonalInfo(name, surname, phone);
+        existingStaff.updatePersonalInfo(name, surname, newStaffPhone);
+        
         staffRepository.save(existingStaff);
         return existingStaff;
     }
@@ -72,8 +80,8 @@ public class StaffDomainService {
     /**
      * Phone numarasının zaten kullanılıp kullanılmadığını kontrol eder
      */
-    private boolean isPhoneAlreadyExists(String phone) {
-        return staffRepository.existsByPhone(phone);
+    private boolean isPhoneAlreadyExists(StaffPhone staffPhone) {
+        return staffRepository.existsByPhone(staffPhone);
     }
 
 }

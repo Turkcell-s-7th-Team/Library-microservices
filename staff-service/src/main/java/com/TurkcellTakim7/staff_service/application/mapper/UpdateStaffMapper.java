@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import com.TurkcellTakim7.staff_service.application.dto.UpdatedStaffResponse;
 import com.TurkcellTakim7.staff_service.domain.entities.Staff;
 import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffId;
+import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffPhone;
+
 
 @Component
 public class UpdateStaffMapper {
@@ -16,7 +18,7 @@ public class UpdateStaffMapper {
                 toUuid(staff),
                 staff.getName(),
                 staff.getSurname(),
-                staff.getStaffPhone()
+                staff.getStaffPhone().toString()
         );
     }
 
@@ -29,7 +31,7 @@ public class UpdateStaffMapper {
                 new StaffId(response.id()),
                 response.name(),
                 response.surname(),
-                response.staffPhone()
+                new StaffPhone(response.staffPhone())
         );
     }
 }

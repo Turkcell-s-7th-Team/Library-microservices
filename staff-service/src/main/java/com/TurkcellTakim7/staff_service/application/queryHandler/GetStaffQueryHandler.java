@@ -21,7 +21,7 @@ public class GetStaffQueryHandler implements QueryHandler<GetStaffQuery, StaffRe
         this.staffDomainService = staffDomainService;
     }
 
-    @Override
+    
     public StaffResponse handle(GetStaffQuery query) {
         Staff staff = staffDomainService.getStaff(new StaffId(query.id()));
         return getStaffMapper.toResponse(staff);

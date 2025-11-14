@@ -20,7 +20,7 @@ public class StaffRepositoryAdapter implements StaffRepository {
     private final StaffEntityMapper staffEntityMapper;
 
     public StaffRepositoryAdapter(SpringDataStaffRepository springDataStaffRepository,
-                                  StaffEntityMapper staffEntityMapper) {
+            StaffEntityMapper staffEntityMapper) {
         this.springDataStaffRepository = springDataStaffRepository;
         this.staffEntityMapper = staffEntityMapper;
     }
@@ -40,8 +40,13 @@ public class StaffRepositoryAdapter implements StaffRepository {
 
     @Override
     public Optional<Staff> findByPhone(StaffPhone phone) {
-        return springDataStaffRepository.findByPhone(phone.value())
+        return springDataStaffRepository.findByStaffPhone(phone.value())
                 .map(staffEntityMapper::toDomain);
+    }
+
+    @Override
+    public boolean existsByPhone(StaffPhone phone) {
+        return springDataStaffRepository.existsByStaffPhone(phone.value());
     }
 
     @Override
@@ -61,12 +66,15 @@ public class StaffRepositoryAdapter implements StaffRepository {
     }
 
     @Override
-    public void deleteById(StaffId staffId) {
-        springDataStaffRepository.deleteById(staffId.value());
+    public List<Staff> findBySurnameContaining(String surname) {
+        return springDataStaffRepository.findBySurnameContaining(surname)
+                .stream()
+                .map(staffEntityMapper::toDomain)
+                .toList();
     }
 
     @Override
-    public boolean existsByPhone(StaffPhone phone) {
-        return springDataStaffRepository.existsByPhone(phone.value());
+    public void deleteById(StaffId staffId) {
+        springDataStaffRepository.deleteById(staffId.value());
     }
 }

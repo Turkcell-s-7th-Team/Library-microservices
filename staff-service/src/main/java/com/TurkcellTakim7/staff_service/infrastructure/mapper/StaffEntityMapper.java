@@ -1,3 +1,6 @@
+
+package com.TurkcellTakim7.staff_service.infrastructure.mapper;
+
 import org.springframework.stereotype.Component;
 
 import com.TurkcellTakim7.staff_service.domain.entities.Staff;
@@ -13,7 +16,7 @@ public class StaffEntityMapper {
         entity.setId(staff.getStaffId().value());
         entity.setName(staff.getName());
         entity.setSurname(staff.getSurname());
-        entity.setPhoneNumber(staff.getPhoneNumber().toString());
+        entity.setStaffPhone(staff.getStaffPhone().toString());
         return entity;
     }
 
@@ -22,7 +25,7 @@ public class StaffEntityMapper {
                 new StaffId(entity.getId()),
                 entity.getName(),
                 entity.getSurname(),
-                new StaffPhone(entity.getPhoneNumber())
+                new StaffPhone(entity.getStaffPhone())
         );
     }
 }

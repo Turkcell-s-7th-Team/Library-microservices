@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import com.TurkcellTakim7.staff_service.application.commands.CreateStaffCommand;
 import com.TurkcellTakim7.staff_service.application.dto.CreatedStaffResponse;
 import com.TurkcellTakim7.staff_service.domain.entities.Staff;
+import com.TurkcellTakim7.staff_service.domain.valueobjects.StaffPhone;
+
 
 @Component
 public class CreateStaffMapper {
@@ -13,7 +15,7 @@ public class CreateStaffMapper {
         return Staff.create(
                 command.name(),
                 command.surname(),
-                command.staffPhone()
+                new StaffPhone(command.staffPhone())
         );
     }
 
@@ -21,7 +23,7 @@ public class CreateStaffMapper {
         return new CreatedStaffResponse(
                 staff.getName(),
                 staff.getSurname(),
-                staff.getStaffPhone()
+                staff.getStaffPhone().toString()
         );
     }
 }

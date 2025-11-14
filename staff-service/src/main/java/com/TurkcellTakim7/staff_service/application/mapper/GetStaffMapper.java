@@ -12,7 +12,7 @@ public class GetStaffMapper {
                 staff.getStaffId().value(),  
                 staff.getName(),
                 staff.getSurname(),
-                staff.getStaffPhone()
+                staff.getStaffPhone().toString()
         );
     }
 }

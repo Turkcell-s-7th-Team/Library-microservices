@@ -11,8 +11,8 @@ import jakarta.validation.constraints.Size;
 
 public record UpdateStaffCommand(
         @NotNull UUID staffId,
-        @NotBlank @Size(min = 3, max = 255) String name,
-        @NotBlank @Size(min = 3, max = 255) String surname,
+        @NotBlank @Size(min = 2, max = 50) String name,
+        @NotBlank @Size(min = 2, max = 50) String surname,
         @NotBlank String staffPhone
 ) implements Command<UpdatedStaffResponse> {
 }
