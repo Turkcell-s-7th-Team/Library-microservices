@@ -2,5 +2,25 @@ spring:
   application:
     name: reservation-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5441/reservation_service
+    username: postgres
+    password: reservationservice_db_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server:
   port: 8087
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
