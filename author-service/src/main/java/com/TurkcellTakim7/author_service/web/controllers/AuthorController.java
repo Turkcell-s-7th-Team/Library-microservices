@@ -57,8 +57,8 @@ public class AuthorController {
 
     @GetMapping
     public List<AuthorResponse> getAuthors(
-            @RequestParam Integer pageIndex,
-            @RequestParam Integer pageSize) {
+            @RequestParam(defaultValue = "0") Integer pageIndex,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
 
         ListAuthorsQuery query = new ListAuthorsQuery(pageIndex, pageSize);
         return listAuthorsQueryHandler.handle(query);
