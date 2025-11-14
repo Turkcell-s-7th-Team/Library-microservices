@@ -1,5 +1,31 @@
 
 services:
+  publishersv_db:
+    container_name: publishersv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: publisher_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: publisherservice_db_password
+    ports:
+      - "5436:5432"
+    volumes:
+      - publisherdb_vol:/var/lib/postgresql/data
+
+  authorsv_db:
+    container_name: authorsv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: author_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: authorservice_db_password
+    ports:
+      - "5437:5432"
+    volumes:
+      - authordb_vol:/var/lib/postgresql/data
+
   membersv_db:
     container_name: membersv_db
     image: postgres:16
@@ -26,20 +52,32 @@ services:
     volumes:
       - bookdb_vol:/var/lib/postgresql/data
 
-  authorsv_db:
-    container_name: authorsv_db
+  loansv_db:
+    container_name: loansv_db
     image: postgres:16
     restart: always
     environment:
-      POSTGRES_DB: author_service
+      POSTGRES_DB: loan_service
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: authorservice_db_password
+      POSTGRES_PASSWORD: loanservice_db_password
     ports:
-      - "5437:5432"
+      - "5440:5432"
     volumes:
-      - authordb_vol:/var/lib/postgresql/data
+      - loandb_vol:/var/lib/postgresql/data
 
- 
+  reservationsv_db:
+    container_name: reservationsv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: reservation_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: reservationservice_db_password
+    ports:
+      - "5441:5432"
+    volumes:
+      - reservationdb_vol:/var/lib/postgresql/data
+
   staffsv_db:
     container_name: staffsv_db
     image: postgres:16
@@ -53,25 +91,11 @@ services:
     volumes:
       - staffdb_vol:/var/lib/postgresql/data
       
- loansv_db:
-    container_name: loansv_db
-    image: postgres:16
-    restart: always
-    environment:
-      POSTGRES_DB: loan_service
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: loanservice_db_password
-    ports:
-      - "5440:5432"
-    volumes:
-      - loandb_vol:/var/lib/postgresql/data
-
 volumes:
   memberdb_vol:
   bookdb_vol:
   authordb_vol:
   staffdb_vol:
   loandb_vol:
-  
-
-  
+  reservationdb_vol:
+  publisherdb_vol:
