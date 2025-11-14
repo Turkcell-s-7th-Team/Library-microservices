@@ -13,8 +13,8 @@ public class UpdatePublisherMapper {
   public UpdatedPublisherResponse toResponse(Publisher publisher) {
     return new UpdatedPublisherResponse(
         toUuid(publisher),
-        publisher.getPublisherName().toString(),
-        publisher.getAddress().toString());
+        publisher.getPublisherName().value(),
+        publisher.getAddress().value());
   }
 
   private UUID toUuid(Publisher publisher) {

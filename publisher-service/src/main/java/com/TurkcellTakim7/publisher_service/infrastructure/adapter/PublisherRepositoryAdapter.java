@@ -32,7 +32,7 @@ public class PublisherRepositoryAdapter implements PublisherRepository {
 
   @Override
   public boolean existsByPublisherName(PublisherName name) {
-    return springDataPublisherRepository.existsByPublisherName(name);
+    return springDataPublisherRepository.existsByPublisherName(name.value());
   }
 
   @Override
@@ -42,7 +42,7 @@ public class PublisherRepositoryAdapter implements PublisherRepository {
 
   @Override
   public Optional<Publisher> findByPublisherName(PublisherName name) {
-    return springDataPublisherRepository.findByPublisherName(name);
+    return springDataPublisherRepository.findByPublisherName(name.value());
   }
 
   @Override
