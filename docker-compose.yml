@@ -1,4 +1,3 @@
-
 services:
   membersv_db:
     container_name: membersv_db
@@ -39,7 +38,19 @@ services:
     volumes:
       - authordb_vol:/var/lib/postgresql/data
 
- 
+  publishersv_db:
+    container_name: publishersv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: publisher_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: publisherservice_db_password
+    ports:
+      - "5436:5432"
+    volumes:
+      - publisherdb_vol:/var/lib/postgresql/data
+
   staffsv_db:
     container_name: staffsv_db
     image: postgres:16
@@ -52,8 +63,8 @@ services:
       - "5442:5432"
     volumes:
       - staffdb_vol:/var/lib/postgresql/data
-      
- loansv_db:
+
+  loansv_db:
     container_name: loansv_db
     image: postgres:16
     restart: always
@@ -70,8 +81,6 @@ volumes:
   memberdb_vol:
   bookdb_vol:
   authordb_vol:
+  publisherdb_vol:
   staffdb_vol:
   loandb_vol:
-  
-
-  
