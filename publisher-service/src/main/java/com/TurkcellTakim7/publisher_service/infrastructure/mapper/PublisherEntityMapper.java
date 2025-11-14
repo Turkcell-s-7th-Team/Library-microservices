@@ -10,17 +10,19 @@ import com.TurkcellTakim7.publisher_service.infrastructure.entities.JpaPublisher
 
 @Component
 public class PublisherEntityMapper {
+
   public JpaPublisherEntity toEntity(Publisher publisher) {
     JpaPublisherEntity entity = new JpaPublisherEntity();
     entity.setId(publisher.getId().value());
-    entity.setName(publisher.getName().value());
+    entity.setPublisherName(publisher.getPublisherName().value());
     entity.setAddress(publisher.getAddress().value());
-
     return entity;
   }
 
   public Publisher toDomain(JpaPublisherEntity entity) {
-    return Publisher.rehydrate(new PublisherId(entity.getId()), new PublisherName(entity.getName()),
+    return Publisher.rehydrate(
+        new PublisherId(entity.getId()),
+        new PublisherName(entity.getPublisherName()),
         new Address(entity.getAddress()));
   }
 }

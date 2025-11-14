@@ -17,8 +17,8 @@ public interface PublisherRepository {
 
   void deleteById(PublisherId publisherId);
 
-  Optional<Publisher> findByName(PublisherName name);
+  Optional<Publisher> findByPublisherName(PublisherName name);
 
-  boolean existsByName(PublisherName name);
+  boolean existsByPublisherName(PublisherName name);
 
 }
