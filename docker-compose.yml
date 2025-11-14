@@ -1,4 +1,3 @@
-
 services:
   membersv_db:
     container_name: membersv_db
@@ -51,7 +50,7 @@ services:
       - "5436:5432"
     volumes:
       - publisherdb_vol:/var/lib/postgresql/data
- 
+
   staffsv_db:
     container_name: staffsv_db
     image: postgres:16
@@ -64,8 +63,8 @@ services:
       - "5442:5432"
     volumes:
       - staffdb_vol:/var/lib/postgresql/data
-      
- loansv_db:
+
+  loansv_db:
     container_name: loansv_db
     image: postgres:16
     restart: always
@@ -85,6 +84,3 @@ volumes:
   publisherdb_vol:
   staffdb_vol:
   loandb_vol:
-  
-
-  
