@@ -3,6 +3,8 @@ package com.TurkcellTakim7.publisher_service.infrastructure.adapter;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import com.TurkcellTakim7.publisher_service.domain.entities.Publisher;
 import com.TurkcellTakim7.publisher_service.domain.repositories.PublisherRepository;
 import com.TurkcellTakim7.publisher_service.domain.valueobjects.PublisherId;
@@ -11,6 +13,7 @@ import com.TurkcellTakim7.publisher_service.infrastructure.entities.JpaPublisher
 import com.TurkcellTakim7.publisher_service.infrastructure.mapper.PublisherEntityMapper;
 import com.TurkcellTakim7.publisher_service.infrastructure.repository.SpringDataPublisherRepository;
 
+@Component
 public class PublisherRepositoryAdapter implements PublisherRepository {
 
   private final PublisherEntityMapper publisherEntityMapper;
@@ -28,8 +31,8 @@ public class PublisherRepositoryAdapter implements PublisherRepository {
   }
 
   @Override
-  public boolean existsByName(PublisherName name) {
-    return springDataPublisherRepository.existsByName(name);
+  public boolean existsByPublisherName(PublisherName name) {
+    return springDataPublisherRepository.existsByPublisherName(name);
   }
 
   @Override
@@ -38,8 +41,8 @@ public class PublisherRepositoryAdapter implements PublisherRepository {
   }
 
   @Override
-  public Optional<Publisher> findByName(PublisherName name) {
-    return springDataPublisherRepository.findByName(name);
+  public Optional<Publisher> findByPublisherName(PublisherName name) {
+    return springDataPublisherRepository.findByPublisherName(name);
   }
 
   @Override

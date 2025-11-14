@@ -21,10 +21,6 @@ public class Publisher {
     return id;
   }
 
-  public PublisherName getName() {
-    return publisherName;
-  }
-
   public Address getAddress() {
     return address;
   }
@@ -42,5 +38,9 @@ public class Publisher {
     Objects.requireNonNull(address);
     this.address = address;
     this.publisherName = name;
+  }
+
+  public PublisherName getPublisherName() {
+    return publisherName;
   }
 }

@@ -1,6 +1,7 @@
 spring:
   application:
     name: publisher-service
+    
   datasource:
     url: jdbc:postgresql://localhost:5436/publisher_service
     username: postgres

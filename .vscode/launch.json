@@ -70,7 +70,8 @@
       "mainClass": "com.TurkcellTakim7.publisher_service.PublisherServiceApplication",
       "projectName": "publisher-service",
       "args": "",
-      "envFile": "${workspaceFolder}/.env"
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "--add-opens java.base/java.lang=ALL-UNNAMED"
     }
   ]
 }

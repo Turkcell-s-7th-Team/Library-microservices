@@ -15,7 +15,7 @@ public class CreatePublisherMapper {
   }
 
   public CreatedPublisherResponse toResponse(Publisher publisher) {
-    return new CreatedPublisherResponse(publisher.getId().value(), publisher.getName().toString(),
+    return new CreatedPublisherResponse(publisher.getId().value(), publisher.getPublisherName().toString(),
         publisher.getAddress().toString());
   }
 }

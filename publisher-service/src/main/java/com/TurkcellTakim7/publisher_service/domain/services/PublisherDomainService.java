@@ -5,6 +5,7 @@ import java.util.List;
 import com.TurkcellTakim7.publisher_service.domain.entities.Publisher;
 import com.TurkcellTakim7.publisher_service.domain.exceptions.PublisherNotFoundException;
 import com.TurkcellTakim7.publisher_service.domain.exceptions.PublisherNotFoundWithGivenName;
+import com.TurkcellTakim7.publisher_service.domain.exceptions.PublisherWithGivenNameIsAlreadyExistException;
 import com.TurkcellTakim7.publisher_service.domain.repositories.PublisherRepository;
 import com.TurkcellTakim7.publisher_service.domain.valueobjects.Address;
 import com.TurkcellTakim7.publisher_service.domain.valueobjects.PublisherId;
@@ -19,6 +20,8 @@ public class PublisherDomainService {
   }
 
   public Publisher createPublisher(PublisherName publisherName, Address address) {
+    if (publisherRepository.existsByPublisherName(publisherName))
+      throw new PublisherWithGivenNameIsAlreadyExistException();
     Publisher publisher = Publisher.create(publisherName, address);
     publisher = publisherRepository.save(publisher);
     return publisher;
@@ -47,12 +50,12 @@ public class PublisherDomainService {
   }
 
   public Publisher findByName(PublisherName publisherName) {
-    Publisher existingPublisher = publisherRepository.findByName(publisherName)
+    Publisher existingPublisher = publisherRepository.findByPublisherName(publisherName)
         .orElseThrow(() -> new PublisherNotFoundWithGivenName(publisherName));
     return existingPublisher;
   }
 
   public Boolean existsByName(PublisherName name) {
-    return publisherRepository.existsByName(name);
+    return publisherRepository.existsByPublisherName(name);
   }
 }

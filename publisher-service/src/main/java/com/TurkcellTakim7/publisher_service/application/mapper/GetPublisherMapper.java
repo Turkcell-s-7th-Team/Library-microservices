@@ -15,7 +15,7 @@ public class GetPublisherMapper {
 
     PublisherResponse response = new PublisherResponse(
         publisher.getId().value(),
-        publisher.getName().value(),
+        publisher.getPublisherName().value(),
         publisher.getAddress().value());
     return response;
   }

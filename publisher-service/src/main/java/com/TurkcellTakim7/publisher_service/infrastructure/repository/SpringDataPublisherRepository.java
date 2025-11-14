@@ -11,8 +11,8 @@ import com.TurkcellTakim7.publisher_service.infrastructure.entities.JpaPublisher
 
 public interface SpringDataPublisherRepository extends JpaRepository<JpaPublisherEntity, UUID> {
 
-  boolean existsByName(PublisherName name);
+  boolean existsByPublisherName(PublisherName name);
 
-  Optional<Publisher> findByName(PublisherName name);
+  Optional<Publisher> findByPublisherName(PublisherName name);
 
 }

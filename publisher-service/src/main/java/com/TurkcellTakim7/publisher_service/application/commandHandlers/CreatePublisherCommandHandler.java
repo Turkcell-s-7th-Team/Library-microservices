@@ -20,8 +20,7 @@ public class CreatePublisherCommandHandler implements CommandHandler<CreatePubli
   private final PublisherDomainService publisherDomainService;
 
   public CreatePublisherCommandHandler(CreatePublisherMapper createPublisherMapper,
-      PublisherRepository publisherRepository,
-      PublisherDomainService publisherDomainService) {
+      PublisherRepository publisherRepository, PublisherDomainService publisherDomainService) {
     this.createPublisherMapper = createPublisherMapper;
     this.publisherRepository = publisherRepository;
     this.publisherDomainService = publisherDomainService;
