@@ -34,13 +34,27 @@ services:
     environment:
       POSTGRES_DB: author_service
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD:    
+      POSTGRES_PASSWORD: authorservice_db_password
     ports:
       - "5437:5432"
     volumes:
       - authordb_vol:/var/lib/postgresql/data
 
+  publishersv_db:
+    container_name: publishersv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: publisher_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: publisherservice_db_password
+    ports:
+      - "5436:5432"
+    volumes:
+      - publisherdb_vol:/var/lib/postgresql/data
+
 volumes:
   memberdb_vol:
   bookdb_vol:
   authordb_vol:
+  publisherdb_vol:
