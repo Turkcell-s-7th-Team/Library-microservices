@@ -2,6 +2,7 @@ package com.TurkcellTakim7.category_service.web.controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,44 +13,76 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.TurkcellTakim7.category_service.domain.entities.Category;
-import com.TurkcellTakim7.category_service.domain.services.CategoryDomainService;
+import com.TurkcellTakim7.category_service.application.commandHandlers.CreateCategoryCommandHandler;
+import com.TurkcellTakim7.category_service.application.commandHandlers.DeleteCategoryCommandHandler;
+import com.TurkcellTakim7.category_service.application.commandHandlers.UpdateCategoryCommandHandler;
+import com.TurkcellTakim7.category_service.application.commands.CreateCategoryCommand;
+import com.TurkcellTakim7.category_service.application.commands.DeleteCategoryCommand;
+import com.TurkcellTakim7.category_service.application.commands.UpdateCategoryCommand;
+import com.TurkcellTakim7.category_service.application.dtos.CategoryRequest;
+import com.TurkcellTakim7.category_service.application.dtos.CategoryResponse;
+import com.TurkcellTakim7.category_service.application.queries.GetAllCategoriesQuery;
+import com.TurkcellTakim7.category_service.application.queries.GetCategoryByIdQuery;
+import com.TurkcellTakim7.category_service.application.queryHandlers.GetAllCategoriesQueryHandler;
+import com.TurkcellTakim7.category_service.application.queryHandlers.GetCategoryByIdQueryHandler;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
-    private final CategoryDomainService service;
+    private final CreateCategoryCommandHandler createHandler;
+    private final UpdateCategoryCommandHandler updateHandler;
+    private final DeleteCategoryCommandHandler deleteHandler;
 
-    public CategoryController(CategoryDomainService service) {
-        this.service = service;
+    private final GetAllCategoriesQueryHandler getAllHandler;
+    private final GetCategoryByIdQueryHandler getByIdHandler;
+
+    public CategoryController(
+            CreateCategoryCommandHandler createHandler,
+            UpdateCategoryCommandHandler updateHandler,
+            DeleteCategoryCommandHandler deleteHandler,
+            GetAllCategoriesQueryHandler getAllHandler,
+            GetCategoryByIdQueryHandler getByIdHandler) {
+        this.createHandler = createHandler;
+        this.updateHandler = updateHandler;
+        this.deleteHandler = deleteHandler;
+        this.getAllHandler = getAllHandler;
+        this.getByIdHandler = getByIdHandler;
     }
 
     @PostMapping
-    public ResponseEntity<Category> create(@RequestBody Category request) {
-        Category created = service.create(request.getName());
-        return ResponseEntity.ok(created);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Category>> getAll() {
-        return ResponseEntity.ok(service.getAll());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Category> getById(@PathVariable String id) {
-        return ResponseEntity.ok(service.getById(id));
+    public ResponseEntity<CategoryResponse> create(@RequestBody CategoryRequest req) {
+        var cmd = new CreateCategoryCommand(req.getName());
+        var response = createHandler.handle(cmd);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@PathVariable String id, @RequestBody Category request) {
-        Category updated = service.update(id, request.getName(), request.isActive());
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<CategoryResponse> update(
+            @PathVariable String id,
+            @RequestBody CategoryRequest req) {
+
+        var cmd = new UpdateCategoryCommand(id, req.getName(), req.isActive());
+        var response = updateHandler.handle(cmd);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<CategoryResponse> delete(@PathVariable String id) {
+        var cmd = new DeleteCategoryCommand(id);
+        var response = deleteHandler.handle(cmd);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryResponse>> getAll() {
+        var response = getAllHandler.handle(new GetAllCategoriesQuery());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponse> getById(@PathVariable String id) {
+        var response = getByIdHandler.handle(new GetCategoryByIdQuery(id));
+        return ResponseEntity.ok(response);
     }
 }
