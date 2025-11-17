@@ -1,19 +1,7 @@
 spring:
   application:
     name: staff-service
-
-  datasource:
-    url: jdbc:postgresql://localhost:5442/staff_service
-    username: postgres
-    password: staffservice_db_password
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-server:
-  port: 8088
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787
