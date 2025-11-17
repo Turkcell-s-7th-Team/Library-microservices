@@ -1,6 +1,7 @@
 spring:
   application:
     name: category-service
-
-server:
-  port: 8082
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787
