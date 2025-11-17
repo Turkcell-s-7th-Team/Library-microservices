@@ -4,44 +4,44 @@ spring:
   cloud:
     gateway:
       server:
-        webflux:
+        webmvc:
           routes:
             - id: author-service-route
               uri: lb://author-service
               predicates:
-                - Path=/api/v1/author/**
+                - Path=/api/v1/authors/**
             - id: book-service-static-route
               uri: lb://book-service
               predicates:
-                - Path=/api/v1/book/**
+                - Path=/api/v1/books/**
             - id: category-service-static-route
               uri: lb://category-service
               predicates:
-                - Path=/api/v1/category/**
+                - Path=/api/v1/categories/**
             - id: fine-service-static-route
               uri: lb://fine-service
               predicates:
-                - Path=/api/v1/fine/**
+                - Path=/api/v1/fines/**
             - id: loan-service-static-route
               uri: lb://loan-service
               predicates:
-                - Path=/api/v1/loan/**
+                - Path=/api/v1/loans/**
             - id: member-service-static-route
               uri: lb://member-service
               predicates:
-                - Path=/api/v1/member/**
+                - Path=/api/v1/members/**
             - id: publisher-service-static-route
               uri: lb://publisher-service
               predicates:
-                - Path=/api/v1/publisher/**
+                - Path=/api/v1/publishers/**
             - id: reservation-service-static-route
               uri: lb://reservation-service
               predicates:
-                - Path=/api/v1/reservation/**
+                - Path=/api/v1/reservations/**
             - id: staff-service-static-route
               uri: lb://staff-service
               predicates:
-                - Path=/api/v1/staff/**
+                - Path=/api/v1/staffs/**
 
 server:
   port: 8888
