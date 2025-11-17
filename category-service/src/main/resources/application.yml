@@ -6,9 +6,9 @@ spring:
     name: category-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/category_service
+    url: jdbc:postgresql://localhost:5443/category_service
     username: postgres
-    password: category_db_password
+    password: categoryservice_db_password
     driver-class-name: org.postgresql.Driver
 
   jpa:
