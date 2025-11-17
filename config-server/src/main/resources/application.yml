@@ -6,7 +6,7 @@ spring:
       server:
         git:
           uri: https://github.com/Turkcell-s-7th-Team/Library-microservices
-          default-label: main
+          # default-label: main
           search-paths:
             - config-server
             - configurations/
