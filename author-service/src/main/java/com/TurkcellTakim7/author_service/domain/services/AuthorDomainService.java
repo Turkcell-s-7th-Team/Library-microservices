@@ -14,7 +14,6 @@ import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorEmail;
 import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorId;
 import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorPhoneNumber;
 
-
 @Component
 public class AuthorDomainService {
 
@@ -90,12 +89,9 @@ public class AuthorDomainService {
     public void deleteAuthor(AuthorId authorId) {
         Author existingAuthor = authorRepository.findById(authorId)
                 .orElseThrow(() -> new AuthorNotFoundException(authorId));
-    
+
         authorRepository.deleteById(authorId);
     }
-    
-    
-    
 
     // === Yardımcı kontroller ===
     private boolean isEmailAlreadyExists(AuthorEmail email) {

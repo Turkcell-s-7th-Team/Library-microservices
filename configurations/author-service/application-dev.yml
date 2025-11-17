@@ -1,21 +1,18 @@
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka
 
 spring:
-
   datasource:
-  url: jdbc:postgresql://localhost:5437/author_service
-  username: postgres
-  password: authorservice_db_password
-  driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5437/author_service
+    username: postgres
+    password: authorservice_db_password
+    driver-class-name: org.postgresql.Driver
 
   jpa:
-  hibernate:
-    ddl-auto: update
-  properties:
     hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
