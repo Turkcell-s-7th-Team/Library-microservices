@@ -4,6 +4,13 @@
 
     {
       "type": "java",
+      "name": "CategoryServiceApplication",
+      "request": "launch",
+      "mainClass": "com.TurkcellTakim7.category_service.CategoryServiceApplication",
+      "projectName": "category-service"
+    },
+    {
+      "type": "java",
       "name": "Spring Boot - ConfigServerApplication <config-server>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
