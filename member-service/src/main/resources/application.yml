@@ -1,19 +1,7 @@
 spring:
   application:
     name: member-service
-
-  datasource:
-    url: jdbc:postgresql://localhost:5438/member_service
-    username: postgres
-    password: memberservice_db_password
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-server:
-  port: 8085
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787
