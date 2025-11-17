@@ -1,6 +1,7 @@
 spring:
   application:
     name: staff-service
-
-server:
-  port: 8088
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787

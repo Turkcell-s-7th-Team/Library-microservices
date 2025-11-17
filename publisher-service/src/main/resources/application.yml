@@ -1,6 +1,7 @@
 spring:
   application:
     name: publisher-service
-
-server:
-  port: 8086
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787

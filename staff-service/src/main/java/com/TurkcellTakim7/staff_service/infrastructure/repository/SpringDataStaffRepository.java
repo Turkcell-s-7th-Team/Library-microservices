@@ -1,0 +1,20 @@
+package com.TurkcellTakim7.staff_service.infrastructure.repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.TurkcellTakim7.staff_service.infrastructure.entities.JpaStaffEntity;
+
+public interface SpringDataStaffRepository extends JpaRepository<JpaStaffEntity, UUID> {
+
+    Optional<JpaStaffEntity> findByStaffPhone(String staffPhone);
+
+    boolean existsByStaffPhone(String staffPhone);
+
+    List<JpaStaffEntity> findByNameContaining(String name);
+
+    List<JpaStaffEntity> findBySurnameContaining(String surname);
+}

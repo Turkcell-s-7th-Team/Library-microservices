@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.6</version>
+        <version>3.5.7</version>
         <relativePath/>
     </parent>
 
@@ -20,6 +20,8 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- Spring Cloud BOM versiyonu (Boot 3.x ile uyumlu) -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -61,9 +63,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.7.4</version>
+     </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -75,7 +78,28 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-stream</artifactId>
+		</dependency>
+
+		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-stream-binder-kafka</artifactId>
+		</dependency>
     </dependencies>
+
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

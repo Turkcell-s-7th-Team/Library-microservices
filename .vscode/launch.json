@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     {
       "type": "java",
       "name": "CategoryServiceApplication",
@@ -56,7 +57,8 @@
       "mainClass": "com.TurkcellTakim7.book_service.BookServiceApplication",
       "projectName": "book-service",
       "args": "",
-      "envFile": "${workspaceFolder}/.env"
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=54679 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=book-service"
     },
     {
       "type": "java",
@@ -65,6 +67,27 @@
       "cwd": "${workspaceFolder}",
       "mainClass": "com.TurkcellTakim7.author_service.AuthorServiceApplication",
       "projectName": "author-service",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-PublisherServiceApplication<publisher-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.publisher_service.PublisherServiceApplication",
+      "projectName": "publisher-service",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": "--add-opens java.base/java.lang=ALL-UNNAMED"
+    }
+    {
+      "type": "java",
+      "name": "Spring Boot-StaffServiceApplication<staff-service>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.TurkcellTakim7.staff_service.StaffServiceApplication",
+      "projectName": "Staff-service",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
     }

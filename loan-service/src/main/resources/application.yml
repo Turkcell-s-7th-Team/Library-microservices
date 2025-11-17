@@ -1,6 +1,7 @@
 spring:
   application:
     name: loan-service
-
-server:
-  port: 8084
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787

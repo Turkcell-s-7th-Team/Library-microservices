@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.6</version>
+		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.TurkcellTakim7</groupId>
@@ -27,8 +27,10 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
-	</properties>
+        <java.version>21</java.version>
+        <!-- Spring Cloud BOM versiyonu (Boot 3.x ile uyumlu) -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,15 +57,70 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
             <version>4.3.0</version>
         </dependency>
+				<dependency>
+					<groupId>jakarta.validation</groupId>
+					<artifactId>jakarta.validation-api</artifactId>
+					<version>3.0.2</version>
+		 </dependency>
+		  <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		  <version>42.7.3</version>
+		</dependency>
+		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-stream</artifactId>
+		</dependency>
+
+		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-stream-binder-kafka</artifactId>
+		</dependency>
+
+		<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
 
     </dependencies>
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <jvmArguments>
+            --add-opens java.base/java.lang=ALL-UNNAMED
+            --add-opens java.base/java.util=ALL-UNNAMED
+        </jvmArguments>
+    </configuration>
+</plugin>
+			<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+        <source>21</source>
+        <target>21</target>
+        <release>21</release>
+    </configuration>
+</plugin>
+
 		</plugins>
 	</build>
 
