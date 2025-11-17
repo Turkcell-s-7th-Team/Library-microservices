@@ -1,26 +1,7 @@
 spring:
   application:
     name: book-service
-
-  datasource:
-    url: jdbc:postgresql://localhost:5439/book_service
-    username: postgres
-    password: bookservice_db_password
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-server:
-  port: 8081
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787
