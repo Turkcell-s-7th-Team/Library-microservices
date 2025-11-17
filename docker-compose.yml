@@ -90,6 +90,19 @@ services:
       - "5442:5432"
     volumes:
       - staffdb_vol:/var/lib/postgresql/data
+
+  categorysv_db:
+    container_name: categorysv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: category_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: categoryservice_db_password
+    ports:
+      - "5443:5432"
+    volumes:
+      - categorydb_vol:/var/lib/postgresql/data
   
   kafka:
     image: apache/kafka:3.8.0
@@ -178,6 +191,7 @@ volumes:
   publisherdb_vol:
   kafka-data:
   kc_pg_data:
+  categorydb_vol:
 
 networks:
   kafkanet:

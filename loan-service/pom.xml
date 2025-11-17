@@ -35,8 +35,8 @@
 
     <properties>
         <java.version>21</java.version>
-        <!-- Spring Cloud BOM versiyonu -->
-        <spring-cloud.version>2023.0.3</spring-cloud.version>
+        <!-- Spring Cloud BOM versiyonu (Boot 3.x ile uyumlu) -->
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -103,6 +103,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
     </dependencies>
