@@ -2,8 +2,6 @@ package com.TurkcellTakim7.author_service.domain.services;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.TurkcellTakim7.author_service.domain.entities.Author;
 import com.TurkcellTakim7.author_service.domain.exceptions.AuthorAlreadyExistsException;
 import com.TurkcellTakim7.author_service.domain.exceptions.AuthorNotFoundException;
@@ -14,7 +12,6 @@ import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorEmail;
 import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorId;
 import com.TurkcellTakim7.author_service.domain.valueobjects.AuthorPhoneNumber;
 
-@Component
 public class AuthorDomainService {
 
     private final AuthorRepository authorRepository;

@@ -3,15 +3,12 @@ package com.TurkcellTakim7.category_service.domain.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 import com.TurkcellTakim7.category_service.domain.entities.Category;
 import com.TurkcellTakim7.category_service.domain.exceptions.CategoryAlreadyExistsException;
 import com.TurkcellTakim7.category_service.domain.exceptions.CategoryNotFoundException;
 import com.TurkcellTakim7.category_service.domain.exceptions.CategoryValidationException;
 import com.TurkcellTakim7.category_service.domain.repositories.CategoryRepository;
 
-@Service
 public class CategoryDomainService {
 
     private final CategoryRepository repository;

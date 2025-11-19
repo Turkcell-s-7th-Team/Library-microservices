@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.stereotype.Component;
-
 import com.TurkcellTakim7.loan_service.domain.entities.Loan;
 import com.TurkcellTakim7.loan_service.domain.exceptions.LoanNotFoundException;
 import com.TurkcellTakim7.loan_service.domain.repositories.LoanRepository;
@@ -14,7 +12,6 @@ import com.TurkcellTakim7.loan_service.domain.valueobjects.LoanId;
 import com.TurkcellTakim7.loan_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.loan_service.domain.valueobjects.StaffId;
 
-@Component
 public class LoanDomainService {
 
     private final LoanRepository loanRepository;
