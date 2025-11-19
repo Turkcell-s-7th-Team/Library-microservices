@@ -1,6 +1,51 @@
 server:
   port: 8888
 
-eureka:
-  register-with-eureka: true
-  fetch-registry: true
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: author-service-route
+          uri: lb://author-service
+          predicates:
+            - Path=/api/v1/authors/**
+
+        - id: book-service-route
+          uri: lb://book-service
+          predicates:
+            - Path=/api/v1/books/**
+
+        - id: category-service-route
+          uri: lb://category-service
+          predicates:
+            - Path=/api/v1/categories/**
+
+        - id: discovery-service-route
+          uri: lb://discovery-service
+          predicates:
+            - Path=/api/v1/discovery/**
+
+        - id: loan-service-route
+          uri: lb://loan-service
+          predicates:
+            - Path=/api/v1/loans/**
+
+        - id: member-service-route
+          uri: lb://member-service
+          predicates:
+            - Path=/api/v1/members/**
+
+        - id: publisher-service-route
+          uri: lb://publisher-service
+          predicates:
+            - Path=/api/v1/publishers/**
+
+        - id: reservation-service-route
+          uri: lb://reservation-service
+          predicates:
+            - Path=/api/v1/reservations/**
+
+        - id: staff-service-route
+          uri: lb://staff-service
+          predicates:
+            - Path=/api/v1/staffs/**
