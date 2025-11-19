@@ -1,5 +1,7 @@
 package com.TurkcellTakim7.reservation_service.application.commandHandlers;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.TurkcellTakim7.reservation_service.application.commands.MarkNextReservationReadyForPickupCommand;
@@ -8,6 +10,7 @@ import com.TurkcellTakim7.reservation_service.application.dtos.ReservationRespon
 import com.TurkcellTakim7.reservation_service.application.mappers.MarkReadyForPickupMapper;
 import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 import com.TurkcellTakim7.reservation_service.domain.service.ReservationDomainService;
+import com.TurkcellTakim7.reservation_service.domain.valueobjects.BookId;
 
 @Service
 public class MarkNextReservationReadyForPickupCommandHandler
@@ -25,11 +28,14 @@ public class MarkNextReservationReadyForPickupCommandHandler
     @Override
     public ReservationResponse handle(MarkNextReservationReadyForPickupCommand command) {
 
-        Reservation reservation = reservationDomainService.markNextReservationReadyForPickup(command.bookId());
+        UUID bookIdRaw = command.bookId();
+        BookId bookId = new BookId(bookIdRaw);
+
+        Reservation reservation = reservationDomainService.markNextReservationReadyForPickup(bookId);
 
         // Kuyrukta PENDING yoksa domain null döndürüyor
         if (reservation == null) {
-            return null; // Controller 204 No Content dönecek
+            return null; // Controller bunu 204 No Content olarak map edebilir
         }
 
         return markReadyForPickupMapper.toResponse(reservation);

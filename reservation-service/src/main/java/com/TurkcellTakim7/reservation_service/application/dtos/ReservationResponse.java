@@ -1,6 +1,7 @@
 package com.TurkcellTakim7.reservation_service.application.dtos;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import com.TurkcellTakim7.reservation_service.domain.enums.ReservationStatus;
 
@@ -9,13 +10,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ReservationResponse {
 
     @Schema(description = "Rezervasyon ID'si", example = "a1b2c3d4-1111-2222-3333-444455556666")
-    private String id;
+    private UUID id;
 
     @Schema(description = "Üye ID'si", example = "f3a0f0c8-1234-5678-9abc-def012345678")
-    private String memberId;
+    private UUID memberId;
 
     @Schema(description = "Kitap ID'si", example = "c7b28f3d-9876-5432-1abc-def098765432")
-    private String bookId;
+    private UUID bookId;
 
     @Schema(description = "Aynı kitap için rezervasyon kuyruğundaki pozisyon (1,2,3,...)", example = "1")
     private int queuePosition;
@@ -38,9 +39,9 @@ public class ReservationResponse {
     public ReservationResponse() {
     }
 
-    public ReservationResponse(String id,
-            String memberId,
-            String bookId,
+    public ReservationResponse(UUID id,
+            UUID memberId,
+            UUID bookId,
             int queuePosition,
             ReservationStatus status,
             Instant createdAt,
@@ -58,27 +59,27 @@ public class ReservationResponse {
         this.pickupExpiresAt = pickupExpiresAt;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getMemberId() {
+    public UUID getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(String memberId) {
+    public void setMemberId(UUID memberId) {
         this.memberId = memberId;
     }
 
-    public String getBookId() {
+    public UUID getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(UUID bookId) {
         this.bookId = bookId;
     }
 

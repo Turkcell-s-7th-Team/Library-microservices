@@ -1,5 +1,7 @@
 package com.TurkcellTakim7.reservation_service.application.commandHandlers;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.TurkcellTakim7.reservation_service.application.commands.CancelReservationCommand;
@@ -8,6 +10,7 @@ import com.TurkcellTakim7.reservation_service.application.dtos.ReservationRespon
 import com.TurkcellTakim7.reservation_service.application.mappers.CancelReservationMapper;
 import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 import com.TurkcellTakim7.reservation_service.domain.service.ReservationDomainService;
+import com.TurkcellTakim7.reservation_service.domain.valueobjects.ReservationId;
 
 @Service
 public class CancelReservationCommandHandler
@@ -25,10 +28,13 @@ public class CancelReservationCommandHandler
     @Override
     public ReservationResponse handle(CancelReservationCommand command) {
 
-        // reason istersen log için kullanılır
-        reservationDomainService.cancelReservation(command.reservationId());
+        UUID reservationIdRaw = command.reservationId();
+        ReservationId reservationId = new ReservationId(reservationIdRaw);
 
-        Reservation updated = reservationDomainService.getReservationById(command.reservationId());
+        // reason istersen log, audit vs. için kullanılabilir
+        reservationDomainService.cancelReservation(reservationId);
+
+        Reservation updated = reservationDomainService.getReservationById(reservationId);
         return cancelReservationMapper.toResponse(updated);
     }
 }

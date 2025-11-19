@@ -10,7 +10,7 @@ spring:
     password: memberservice_db_password
     driver-class-name: org.postgresql.Driver
 
-    kafka:
+  kafka:
     bootstrap-servers: localhost:9094
 
   cloud:
@@ -29,4 +29,3 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-

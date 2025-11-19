@@ -81,7 +81,8 @@ public class ReservationRepositoryAdapter implements ReservationRepository {
     }
 
     @Override
-    public Optional<Reservation> findFirstByMemberIdAndBookIdAndStatusIn(MemberId memberId,
+    public Optional<Reservation> findFirstByMemberIdAndBookIdAndStatusIn(
+            MemberId memberId,
             BookId bookId,
             List<ReservationStatus> statuses) {
         return jpaRepository
