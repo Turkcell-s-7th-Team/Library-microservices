@@ -54,6 +54,12 @@ public class MemberController {
     return getMemberQueryHandler.handle(new GetMemberQuery(id));
   }
 
+  @GetMapping("/{memberId}/membership-level")
+  public String getMembershipLevel(@PathVariable UUID memberId) {
+    MemberResponse memberResponse = getMember(memberId);
+    return memberResponse.membershipLevel();
+  }
+
   @GetMapping
   public List<MemberResponse> getMemberList(GetMemberListQuery query) {
     return getMemberListQueryHandler.handle(query);
@@ -86,5 +92,4 @@ public class MemberController {
   public void deleteMember(@PathVariable UUID id) {
     deleteMemberCommandHandler.handle(new DeleteMemberCommand(id));
   }
-
 }

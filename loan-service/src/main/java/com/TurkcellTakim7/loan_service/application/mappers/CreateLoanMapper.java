@@ -1,7 +1,5 @@
 package com.TurkcellTakim7.loan_service.application.mappers;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Component;
 
 import com.TurkcellTakim7.loan_service.application.commands.CreateLoanCommand;
@@ -16,9 +14,9 @@ public class CreateLoanMapper {
 
     public Loan toDomain(CreateLoanCommand command) {
         return Loan.create(
-                new MemberId(UUID.fromString(command.memberId())),
-                new BookId(UUID.fromString(command.bookId())),
-                new StaffId(UUID.fromString(command.staffId())),
+                new MemberId(command.memberId()),
+                new BookId(command.bookId()),
+                new StaffId(command.staffId()),
                 command.loanDate(),
                 command.dueDate());
     }

@@ -52,15 +52,9 @@ public class LoanController {
     // 1) create loan
     @PostMapping
     public ResponseEntity<CreatedLoanResponse> create(@RequestBody CreateLoanRequest request) {
-
-        CreatedLoanResponse response = createLoanCommandHandler.handle(
-                new CreateLoanCommand(
-                        request.memberId(),
-                        request.bookId(),
-                        request.staffId(),
-                        request.loanDate(),
-                        request.dueDate()));
-
+        System.out.println("Incoming memberId from request = " + request.memberId());
+        CreatedLoanResponse response = createLoanCommandHandler.handle(new CreateLoanCommand(request.memberId(),
+                request.bookId(), request.staffId(), request.loanDate(), request.dueDate()));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
