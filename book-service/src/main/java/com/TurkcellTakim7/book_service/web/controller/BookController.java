@@ -54,6 +54,17 @@ public class BookController {
     return getBookByIdQueryHandler.handle(new GetBookByIdQuery(id));
   }
 
+  @GetMapping("/{id}/status")
+  public boolean  getBookStatus(@PathVariable UUID id) {
+    
+    BookResponse response = getBookByIdQueryHandler.handle(new GetBookByIdQuery(id));
+    if(response.availableCopies() > 0){
+      return true;
+    }
+    return false;
+  }
+
+
   @GetMapping
   public List<BookResponse> getBookList() {
     return getBookListQueryHandler.handle(new GetBookListQuery());

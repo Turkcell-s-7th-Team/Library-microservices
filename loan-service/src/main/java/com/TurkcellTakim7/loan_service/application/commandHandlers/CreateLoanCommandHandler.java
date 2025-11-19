@@ -24,6 +24,11 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
     @Override
     public CreatedLoanResponse handle(CreateLoanCommand command) {
 
+
+        // diğer servislerin validasyon
+        //domain validasyonları 
+        //event publish 
+        //return 
         Loan loan = loanDomainService.createLoan(
                 command.memberId(),
                 command.bookId(),

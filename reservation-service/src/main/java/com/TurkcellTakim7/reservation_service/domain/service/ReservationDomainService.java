@@ -7,8 +7,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 import com.TurkcellTakim7.reservation_service.domain.enums.ReservationStatus;
 import com.TurkcellTakim7.reservation_service.domain.exceptions.ActiveReservationExistsException;
@@ -19,7 +17,6 @@ import com.TurkcellTakim7.reservation_service.domain.valueobjects.BookId;
 import com.TurkcellTakim7.reservation_service.domain.valueobjects.MemberId;
 import com.TurkcellTakim7.reservation_service.domain.valueobjects.ReservationId;
 
-@Service
 public class ReservationDomainService {
 
     private static final Duration DEFAULT_PICKUP_DURATION = Duration.ofDays(2);
