@@ -7,7 +7,6 @@ import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 
 /**
  * Genel Reservation -> ReservationResponse dönüşümü için mapper.
- * Get by id, list by member vs. bu mapper'ı kullanır.
  */
 @Component
 public class ReservationResponseMapper {
@@ -22,6 +21,7 @@ public class ReservationResponseMapper {
                 reservation.getCreatedAt(),
                 reservation.getUpdatedAt(),
                 reservation.getPickupWindow() != null ? reservation.getPickupWindow().startAt() : null,
-                reservation.getPickupWindow() != null ? reservation.getPickupWindow().expiresAt() : null);
+                reservation.getPickupWindow() != null ? reservation.getPickupWindow().expiresAt() : null
+        );
     }
 }

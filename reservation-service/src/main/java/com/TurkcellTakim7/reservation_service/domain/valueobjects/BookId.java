@@ -1,28 +1,15 @@
 package com.TurkcellTakim7.reservation_service.domain.valueobjects;
 
-import java.io.Serializable;
-import java.util.Objects;
+import java.util.UUID;
 
-/**
- * Diğer mikroservisteki Book/BookItem'ın kimliğini temsil eder.
- */
-public record BookId(String value) implements Serializable {
-
+public record BookId(UUID value) {
     public BookId {
-        Objects.requireNonNull(value, "BookId value cannot be null");
-        if (value.isBlank()) {
-            throw new IllegalArgumentException("BookId value cannot be blank");
+        if (value == null) {
+            throw new IllegalArgumentException("BookId cannot be null!");
         }
-        // İstersen:
-        // UUID.fromString(value);
     }
 
-    public static BookId of(String raw) {
-        return new BookId(raw);
-    }
-
-    @Override
-    public String toString() {
-        return value;
+    public static BookId from(UUID id) {
+        return new BookId(id);
     }
 }

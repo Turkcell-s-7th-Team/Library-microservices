@@ -1,29 +1,15 @@
 package com.TurkcellTakim7.reservation_service.domain.valueobjects;
 
-import java.io.Serializable;
-import java.util.Objects;
+import java.util.UUID;
 
-/**
- * Diğer mikroservisteki Member'ın kimliğini temsil eder.
- * Dış dünyadan String gelir, domain içinde VO olarak tutulur.
- */
-public record MemberId(String value) implements Serializable {
-
+public record MemberId(UUID value) {
     public MemberId {
-        Objects.requireNonNull(value, "MemberId value cannot be null");
-        if (value.isBlank()) {
-            throw new IllegalArgumentException("MemberId value cannot be blank");
+        if (value == null) {
+            throw new IllegalArgumentException("MemberId cannot be null!");
         }
-        // İstersen:
-        // UUID.fromString(value); // format kontrolü için
     }
 
-    public static MemberId of(String raw) {
-        return new MemberId(raw);
-    }
-
-    @Override
-    public String toString() {
-        return value;
+    public static MemberId from(UUID id) {
+        return new MemberId(id);
     }
 }

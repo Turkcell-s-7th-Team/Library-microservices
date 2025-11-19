@@ -35,12 +35,15 @@ public class ReservationDataMapper {
     }
 
     public Reservation toDomain(ReservationJpaEntity entity) {
-        ReservationId reservationId = ReservationId.of(entity.getId());
-        MemberId memberId = MemberId.of(entity.getMemberId());
-        BookId bookId = BookId.of(entity.getBookId());
+
+        ReservationId reservationId = new ReservationId(entity.getId());
+        MemberId memberId = new MemberId(entity.getMemberId());
+        BookId bookId = new BookId(entity.getBookId());
 
         PickupWindow pickupWindow = null;
-        if (entity.getPickupStartAt() != null && entity.getPickupExpiresAt() != null) {
+        if (entity.getPickupStartAt() != null &&
+                entity.getPickupExpiresAt() != null) {
+
             pickupWindow = new PickupWindow(
                     entity.getPickupStartAt(),
                     entity.getPickupExpiresAt());

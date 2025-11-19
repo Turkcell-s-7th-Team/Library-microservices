@@ -27,12 +27,18 @@ public class ReservationDomainService {
         this.reservationRepository = reservationRepository;
     }
 
-    public Reservation createReservation(String memberIdRaw, String bookIdRaw) {
+    /**
+     * Üye için bir kitap rezervasyonu oluşturur.
+     * Artık sadece value-object seviyesinde konuşuyoruz.
+     */
+    public Reservation createReservation(MemberId memberId, BookId bookId) {
 
-        validateRawIds(memberIdRaw, bookIdRaw);
-
-        MemberId memberId = MemberId.of(memberIdRaw);
-        BookId bookId = BookId.of(bookIdRaw);
+        if (memberId == null) {
+            throw new ReservationValidationException("memberId cannot be null");
+        }
+        if (bookId == null) {
+            throw new ReservationValidationException("bookId cannot be null");
+        }
 
         List<ReservationStatus> activeStatuses = new ArrayList<>(
                 EnumSet.of(ReservationStatus.PENDING, ReservationStatus.WAITING_FOR_PICKUP));
@@ -43,15 +49,16 @@ public class ReservationDomainService {
                 activeStatuses);
 
         if (existingActive.isPresent()) {
+
             throw new ActiveReservationExistsException(memberId.value(), bookId.value());
         }
 
         List<Reservation> queue = reservationRepository.findByBookIdOrderByQueuePositionAsc(bookId);
+
         int nextPosition = queue.isEmpty()
                 ? 1
                 : queue.get(queue.size() - 1).getQueuePosition() + 1;
 
-        // 🔍 Eskiden: Reservation.createNew(..., clock)
         Clock clock = Clock.systemUTC();
         Reservation reservation = Reservation.createNew(
                 memberId,
@@ -62,27 +69,25 @@ public class ReservationDomainService {
         return reservationRepository.save(reservation);
     }
 
-    public Reservation getReservationById(String reservationIdRaw) {
-        if (reservationIdRaw == null || reservationIdRaw.isBlank()) {
-            throw new ReservationValidationException("reservationId cannot be null or blank");
+    public Reservation getReservationById(ReservationId reservationId) {
+        if (reservationId == null) {
+            throw new ReservationValidationException("reservationId cannot be null");
         }
 
-        ReservationId reservationId = ReservationId.of(reservationIdRaw);
         return reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationNotFoundException(reservationId.value()));
     }
 
-    public List<Reservation> getReservationsByMemberId(String memberIdRaw) {
-        if (memberIdRaw == null || memberIdRaw.isBlank()) {
-            throw new ReservationValidationException("memberId cannot be null or blank");
+    public List<Reservation> getReservationsByMemberId(MemberId memberId) {
+        if (memberId == null) {
+            throw new ReservationValidationException("memberId cannot be null");
         }
 
-        MemberId memberId = MemberId.of(memberIdRaw);
         return reservationRepository.findByMemberId(memberId);
     }
 
-    public void cancelReservation(String reservationIdRaw) {
-        Reservation reservation = getReservationById(reservationIdRaw);
+    public void cancelReservation(ReservationId reservationId) {
+        Reservation reservation = getReservationById(reservationId);
 
         Clock clock = Clock.systemUTC();
         reservation.cancel(clock);
@@ -90,8 +95,8 @@ public class ReservationDomainService {
         reservationRepository.save(reservation);
     }
 
-    public void fulfillReservation(String reservationIdRaw) {
-        Reservation reservation = getReservationById(reservationIdRaw);
+    public void fulfillReservation(ReservationId reservationId) {
+        Reservation reservation = getReservationById(reservationId);
 
         Clock clock = Clock.systemUTC();
         reservation.markFulfilled(clock);
@@ -99,12 +104,10 @@ public class ReservationDomainService {
         reservationRepository.save(reservation);
     }
 
-    public Reservation markNextReservationReadyForPickup(String bookIdRaw) {
-        if (bookIdRaw == null || bookIdRaw.isBlank()) {
-            throw new ReservationValidationException("bookId cannot be null or blank");
+    public Reservation markNextReservationReadyForPickup(BookId bookId) {
+        if (bookId == null) {
+            throw new ReservationValidationException("bookId cannot be null");
         }
-
-        BookId bookId = BookId.of(bookIdRaw);
 
         List<Reservation> queue = reservationRepository.findByBookIdOrderByQueuePositionAsc(bookId);
 
@@ -124,26 +127,15 @@ public class ReservationDomainService {
         return reservationRepository.save(reservation);
     }
 
-    public void deleteReservation(String reservationIdRaw) {
-        if (reservationIdRaw == null || reservationIdRaw.isBlank()) {
-            throw new ReservationValidationException("reservationId cannot be null or blank");
+    public void deleteReservation(ReservationId reservationId) {
+        if (reservationId == null) {
+            throw new ReservationValidationException("reservationId cannot be null");
         }
-
-        ReservationId reservationId = ReservationId.of(reservationIdRaw);
 
         if (!reservationRepository.existsById(reservationId)) {
             throw new ReservationNotFoundException(reservationId.value());
         }
 
         reservationRepository.deleteById(reservationId);
-    }
-
-    private void validateRawIds(String memberIdRaw, String bookIdRaw) {
-        if (memberIdRaw == null || memberIdRaw.isBlank()) {
-            throw new ReservationValidationException("memberId cannot be null or blank");
-        }
-        if (bookIdRaw == null || bookIdRaw.isBlank()) {
-            throw new ReservationValidationException("bookId cannot be null or blank");
-        }
     }
 }

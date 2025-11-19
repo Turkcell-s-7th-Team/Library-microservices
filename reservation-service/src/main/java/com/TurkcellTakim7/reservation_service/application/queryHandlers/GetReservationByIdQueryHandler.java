@@ -8,24 +8,27 @@ import com.TurkcellTakim7.reservation_service.application.mappers.ReservationRes
 import com.TurkcellTakim7.reservation_service.application.queries.GetReservationByIdQuery;
 import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 import com.TurkcellTakim7.reservation_service.domain.service.ReservationDomainService;
+import com.TurkcellTakim7.reservation_service.domain.valueobjects.ReservationId;
 
 @Service
 public class GetReservationByIdQueryHandler
-        implements QueryHandler<GetReservationByIdQuery, ReservationResponse> {
+                implements QueryHandler<GetReservationByIdQuery, ReservationResponse> {
 
-    private final ReservationDomainService reservationDomainService;
-    private final ReservationResponseMapper reservationResponseMapper;
+        private final ReservationDomainService reservationDomainService;
+        private final ReservationResponseMapper reservationResponseMapper;
 
-    public GetReservationByIdQueryHandler(ReservationDomainService reservationDomainService,
-            ReservationResponseMapper reservationResponseMapper) {
-        this.reservationDomainService = reservationDomainService;
-        this.reservationResponseMapper = reservationResponseMapper;
-    }
+        public GetReservationByIdQueryHandler(ReservationDomainService reservationDomainService,
+                        ReservationResponseMapper reservationResponseMapper) {
+                this.reservationDomainService = reservationDomainService;
+                this.reservationResponseMapper = reservationResponseMapper;
+        }
 
-    @Override
-    public ReservationResponse handle(GetReservationByIdQuery query) {
+        @Override
+        public ReservationResponse handle(GetReservationByIdQuery query) {
 
-        Reservation reservation = reservationDomainService.getReservationById(query.reservationId());
-        return reservationResponseMapper.toResponse(reservation);
-    }
+                ReservationId id = new ReservationId(query.reservationId());
+
+                Reservation reservation = reservationDomainService.getReservationById(id);
+                return reservationResponseMapper.toResponse(reservation);
+        }
 }

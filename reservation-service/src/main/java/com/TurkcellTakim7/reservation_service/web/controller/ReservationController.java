@@ -1,6 +1,7 @@
 package com.TurkcellTakim7.reservation_service.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +45,12 @@ public class ReservationController {
     private final GetReservationsByMemberQueryHandler getReservationsByMemberQueryHandler;
 
     public ReservationController(CreateReservationCommandHandler createReservationCommandHandler,
-            CancelReservationCommandHandler cancelReservationCommandHandler,
-            FulfillReservationCommandHandler fulfillReservationCommandHandler,
-            DeleteReservationCommandHandler deleteReservationCommandHandler,
-            MarkNextReservationReadyForPickupCommandHandler markNextReservationReadyForPickupCommandHandler,
-            GetReservationByIdQueryHandler getReservationByIdQueryHandler,
-            GetReservationsByMemberQueryHandler getReservationsByMemberQueryHandler) {
+                                 CancelReservationCommandHandler cancelReservationCommandHandler,
+                                 FulfillReservationCommandHandler fulfillReservationCommandHandler,
+                                 DeleteReservationCommandHandler deleteReservationCommandHandler,
+                                 MarkNextReservationReadyForPickupCommandHandler markNextReservationReadyForPickupCommandHandler,
+                                 GetReservationByIdQueryHandler getReservationByIdQueryHandler,
+                                 GetReservationsByMemberQueryHandler getReservationsByMemberQueryHandler) {
         this.createReservationCommandHandler = createReservationCommandHandler;
         this.cancelReservationCommandHandler = cancelReservationCommandHandler;
         this.fulfillReservationCommandHandler = fulfillReservationCommandHandler;
@@ -65,15 +66,16 @@ public class ReservationController {
 
         CreatedReservationResponse response = createReservationCommandHandler.handle(
                 new CreateReservationCommand(
-                        request.getMemberId(),
-                        request.getBookId()));
+                        request.getMemberId(),   // UUID
+                        request.getBookId()      // UUID
+                ));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // 2) get reservation by id
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationResponse> getById(@PathVariable("id") String id) {
+    public ResponseEntity<ReservationResponse> getById(@PathVariable("id") UUID id) {
 
         ReservationResponse response = getReservationByIdQueryHandler.handle(
                 new GetReservationByIdQuery(id));
@@ -83,7 +85,7 @@ public class ReservationController {
 
     // 3) get reservations by member
     @GetMapping("/member/{memberId}")
-    public ResponseEntity<List<ReservationResponse>> getByMember(@PathVariable("memberId") String memberId) {
+    public ResponseEntity<List<ReservationResponse>> getByMember(@PathVariable("memberId") UUID memberId) {
 
         List<ReservationResponse> response = getReservationsByMemberQueryHandler.handle(
                 new GetReservationsByMemberQuery(memberId));
@@ -93,8 +95,8 @@ public class ReservationController {
 
     // 4) cancel reservation
     @PostMapping("/{id}/cancel")
-    public ResponseEntity<Void> cancel(@PathVariable("id") String id,
-            @RequestBody(required = false) CancelReservationRequest request) {
+    public ResponseEntity<Void> cancel(@PathVariable("id") UUID id,
+                                       @RequestBody(required = false) CancelReservationRequest request) {
 
         cancelReservationCommandHandler.handle(
                 new CancelReservationCommand(
@@ -106,8 +108,8 @@ public class ReservationController {
 
     // 5) fulfill reservation (member picked up the book)
     @PostMapping("/{id}/fulfill")
-    public ResponseEntity<Void> fulfill(@PathVariable("id") String id,
-            @RequestBody(required = false) FulfillReservationRequest request) {
+    public ResponseEntity<Void> fulfill(@PathVariable("id") UUID id,
+                                        @RequestBody(required = false) FulfillReservationRequest request) {
 
         fulfillReservationCommandHandler.handle(
                 new FulfillReservationCommand(
@@ -119,7 +121,7 @@ public class ReservationController {
 
     // 6) delete reservation (hard delete - opsiyonel endpoint)
     @PostMapping("/{id}/delete")
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") UUID id) {
 
         deleteReservationCommandHandler.handle(
                 new DeleteReservationCommand(id));
@@ -130,7 +132,7 @@ public class ReservationController {
     // 7) mark next reservation as WAITING_FOR_PICKUP by bookId
     @PostMapping("/book/{bookId}/ready")
     public ResponseEntity<ReservationResponse> markNextReadyForPickup(
-            @PathVariable("bookId") String bookId) {
+            @PathVariable("bookId") UUID bookId) {
 
         ReservationResponse response = markNextReservationReadyForPickupCommandHandler.handle(
                 new MarkNextReservationReadyForPickupCommand(bookId));
