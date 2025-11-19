@@ -10,6 +10,19 @@ spring:
     password: categoryservice_db_password
     driver-class-name: org.postgresql.Driver
 
+  kafka:
+    bootstrap-servers: localhost:9094
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9094
+      bindings:
+        categoryEvents-out-0:
+          destination: category-events
+          contentType: application/json
+
   jpa:
     hibernate:
       ddl-auto: update

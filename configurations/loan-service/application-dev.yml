@@ -10,9 +10,24 @@ spring:
     password: loanservice_db_password
     driver-class-name: org.postgresql.Driver
 
+  kafka:
+    bootstrap-servers: localhost:9094
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9094
+      bindings:
+        loanEvents-out-0:
+          destination: loan-topic
+          contentType: application/json
+          
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  
