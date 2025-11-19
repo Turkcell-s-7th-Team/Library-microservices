@@ -16,6 +16,20 @@ public record MembershipLevel(String value) implements Serializable {
         }
     }
 
+    public static MembershipLevel from(String s) {
+
+        if (s.startsWith("MembershipLevel[value=") && s.endsWith("]")) {
+            s = s.substring("MembershipLevel[value=".length(), s.length() - 1);
+        }
+
+        return switch (s) {
+            case "STANDARD" -> STANDARD;
+            case "GOLD" -> GOLD;
+            case "BANNED" -> BANNED;
+            default -> throw new IllegalArgumentException("Invalid MembershipLevel: " + s);
+        };
+    }
+
     @Override
     public String toString() {
         return value;

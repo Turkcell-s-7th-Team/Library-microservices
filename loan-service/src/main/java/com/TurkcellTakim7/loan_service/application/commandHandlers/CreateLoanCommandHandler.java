@@ -28,19 +28,20 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
         this.bookClient = bookClient;
     }
 
-    @Override
     public CreatedLoanResponse handle(CreateLoanCommand command) {
+
         System.out.println("MemberId inside command = " + command.memberId());
 
         MemberValidationDTO memberValidationDTO = memberClient.getMemberValidationInfo(command.memberId());
+        System.out.println("tosit:" + memberValidationDTO);
 
-        if (memberValidationDTO.toString() == "BANNED") {
+        // BANNED kontrolü
+        if (memberValidationDTO.membershipLevel().value().equals("BANNED")) {
             throw new RuntimeException("Member is banned!");
         }
 
-        Boolean isAvaible = bookClient.getBookValidationInfo(command.bookId());
-
-        if (isAvaible == false) {
+        Boolean isAvailable = bookClient.getBookValidationInfo(command.bookId());
+        if (!isAvailable) {
             throw new RuntimeException("There is no available copy!");
         }
 
@@ -53,4 +54,5 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
 
         return createLoanMapper.toResponse(loan);
     }
+
 }
