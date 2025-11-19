@@ -10,6 +10,19 @@ spring:
     password: authorservice_db_password
     driver-class-name: org.postgresql.Driver
 
+  kafka:
+    bootstrap-servers: localhost:9094
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9094
+      bindings:
+        authorEvents-out-0:
+          destination: author-events
+          contentType: application/json
+
   jpa:
     hibernate:
       ddl-auto: update
