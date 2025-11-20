@@ -1,6 +1,7 @@
 package com.TurkcellTakim7.reservation_service.infrastructure.entities;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import com.TurkcellTakim7.reservation_service.domain.enums.ReservationStatus;
 
@@ -16,14 +17,14 @@ import jakarta.persistence.Table;
 public class ReservationJpaEntity {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, length = 36)
-    private String id;
+    @Column(name = "id", nullable = false, updatable = false)
+    private UUID id;
 
-    @Column(name = "member_id", nullable = false, length = 36)
-    private String memberId;
+    @Column(name = "member_id", nullable = false)
+    private UUID memberId;
 
-    @Column(name = "book_id", nullable = false, length = 36)
-    private String bookId;
+    @Column(name = "book_id", nullable = false)
+    private UUID bookId;
 
     @Column(name = "queue_position", nullable = false)
     private int queuePosition;
@@ -49,15 +50,15 @@ public class ReservationJpaEntity {
     public ReservationJpaEntity() {
     }
 
-    public ReservationJpaEntity(String id,
-                                String memberId,
-                                String bookId,
-                                int queuePosition,
-                                ReservationStatus status,
-                                Instant createdAt,
-                                Instant updatedAt,
-                                Instant pickupStartAt,
-                                Instant pickupExpiresAt) {
+    public ReservationJpaEntity(UUID id,
+            UUID memberId,
+            UUID bookId,
+            int queuePosition,
+            ReservationStatus status,
+            Instant createdAt,
+            Instant updatedAt,
+            Instant pickupStartAt,
+            Instant pickupExpiresAt) {
         this.id = id;
         this.memberId = memberId;
         this.bookId = bookId;
@@ -71,27 +72,27 @@ public class ReservationJpaEntity {
 
     // ==== Getters & Setters ====
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getMemberId() {
+    public UUID getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(String memberId) {
+    public void setMemberId(UUID memberId) {
         this.memberId = memberId;
     }
 
-    public String getBookId() {
+    public UUID getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(UUID bookId) {
         this.bookId = bookId;
     }
 

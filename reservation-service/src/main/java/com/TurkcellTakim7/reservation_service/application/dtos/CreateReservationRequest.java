@@ -1,39 +1,41 @@
 package com.TurkcellTakim7.reservation_service.application.dtos;
 
+import java.util.UUID;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateReservationRequest {
 
-    @NotBlank
+    @NotNull
     @Schema(description = "Rezervasyonu yapan üyenin ID'si", example = "f3a0f0c8-1234-5678-9abc-def012345678")
-    private String memberId;
+    private UUID memberId;
 
-    @NotBlank
+    @NotNull
     @Schema(description = "Rezervasyon yapılacak kitabın ID'si", example = "c7b28f3d-9876-5432-1abc-def098765432")
-    private String bookId;
+    private UUID bookId;
 
     public CreateReservationRequest() {
     }
 
-    public CreateReservationRequest(String memberId, String bookId) {
+    public CreateReservationRequest(UUID memberId, UUID bookId) {
         this.memberId = memberId;
         this.bookId = bookId;
     }
 
-    public String getMemberId() {
+    public UUID getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(String memberId) {
+    public void setMemberId(UUID memberId) {
         this.memberId = memberId;
     }
 
-    public String getBookId() {
+    public UUID getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(UUID bookId) {
         this.bookId = bookId;
     }
 }

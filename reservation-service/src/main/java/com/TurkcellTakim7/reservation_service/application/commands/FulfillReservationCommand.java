@@ -1,5 +1,7 @@
 package com.TurkcellTakim7.reservation_service.application.commands;
 
+import java.util.UUID;
+
 import com.TurkcellTakim7.reservation_service.application.core.command.Command;
 import com.TurkcellTakim7.reservation_service.application.dtos.ReservationResponse;
 
@@ -7,7 +9,7 @@ import com.TurkcellTakim7.reservation_service.application.dtos.ReservationRespon
  * Rezervasyonun FULFILLED yapılması (kitap teslim alındı) komutu.
  */
 public record FulfillReservationCommand(
-        String reservationId,
-        String staffId // opsiyonel
+                UUID reservationId,
+                UUID staffId // opsiyonel
 ) implements Command<ReservationResponse> {
 }

@@ -1,5 +1,7 @@
 package com.TurkcellTakim7.reservation_service.application.commandHandlers;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.TurkcellTakim7.reservation_service.application.commands.FulfillReservationCommand;
@@ -8,6 +10,7 @@ import com.TurkcellTakim7.reservation_service.application.dtos.ReservationRespon
 import com.TurkcellTakim7.reservation_service.application.mappers.FulfillReservationMapper;
 import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 import com.TurkcellTakim7.reservation_service.domain.service.ReservationDomainService;
+import com.TurkcellTakim7.reservation_service.domain.valueobjects.ReservationId;
 
 @Service
 public class FulfillReservationCommandHandler
@@ -25,10 +28,13 @@ public class FulfillReservationCommandHandler
     @Override
     public ReservationResponse handle(FulfillReservationCommand command) {
 
-        // staffId şimdilik kullanılmıyor ama komutta duruyor
-        reservationDomainService.fulfillReservation(command.reservationId());
+        UUID reservationIdRaw = command.reservationId();
+        ReservationId reservationId = new ReservationId(reservationIdRaw);
 
-        Reservation updated = reservationDomainService.getReservationById(command.reservationId());
+        // staffId şimdilik kullanılmıyor ama ileride audit için kullanılabilir
+        reservationDomainService.fulfillReservation(reservationId);
+
+        Reservation updated = reservationDomainService.getReservationById(reservationId);
         return fulfillReservationMapper.toResponse(updated);
     }
 }

@@ -10,6 +10,7 @@ import com.TurkcellTakim7.reservation_service.application.mappers.ReservationRes
 import com.TurkcellTakim7.reservation_service.application.queries.GetReservationsByMemberQuery;
 import com.TurkcellTakim7.reservation_service.domain.entity.Reservation;
 import com.TurkcellTakim7.reservation_service.domain.service.ReservationDomainService;
+import com.TurkcellTakim7.reservation_service.domain.valueobjects.MemberId;
 
 @Service
 public class GetReservationsByMemberQueryHandler
@@ -27,7 +28,9 @@ public class GetReservationsByMemberQueryHandler
     @Override
     public List<ReservationResponse> handle(GetReservationsByMemberQuery query) {
 
-        List<Reservation> reservations = reservationDomainService.getReservationsByMemberId(query.memberId());
+        MemberId memberId = new MemberId(query.memberId());
+
+        List<Reservation> reservations = reservationDomainService.getReservationsByMemberId(memberId);
 
         return reservations.stream()
                 .map(reservationResponseMapper::toResponse)
