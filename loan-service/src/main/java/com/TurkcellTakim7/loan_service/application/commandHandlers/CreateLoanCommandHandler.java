@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.TurkcellTakim7.loan_service.application.commands.CreateLoanCommand;
 import com.TurkcellTakim7.loan_service.application.core.command.CommandHandler;
 import com.TurkcellTakim7.loan_service.application.dtos.CreatedLoanResponse;
+import com.TurkcellTakim7.loan_service.application.exception.MemberIsBannedException;
+import com.TurkcellTakim7.loan_service.application.exception.NoAvailableCopyException;
 import com.TurkcellTakim7.loan_service.application.mappers.CreateLoanMapper;
 import com.TurkcellTakim7.loan_service.domain.entities.Loan;
 import com.TurkcellTakim7.loan_service.domain.services.LoanDomainService;
@@ -28,20 +30,18 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
         this.bookClient = bookClient;
     }
 
-    @Override
     public CreatedLoanResponse handle(CreateLoanCommand command) {
-        System.out.println("MemberId inside command = " + command.memberId());
 
         MemberValidationDTO memberValidationDTO = memberClient.getMemberValidationInfo(command.memberId());
 
-        if (memberValidationDTO.toString() == "BANNED") {
-            throw new RuntimeException("Member is banned!");
+        // BANNED kontrolü
+        if (memberValidationDTO.membershipLevel().value().equals("BANNED")) {
+            throw new MemberIsBannedException();
         }
-
-        Boolean isAvaible = bookClient.getBookValidationInfo(command.bookId());
-
-        if (isAvaible == false) {
-            throw new RuntimeException("There is no available copy!");
+        // Available copy kontrolü
+        Boolean isAvailable = bookClient.getBookValidationInfo(command.bookId());
+        if (!isAvailable) {
+            throw new NoAvailableCopyException();
         }
 
         Loan loan = loanDomainService.createLoan(
@@ -53,4 +53,5 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
 
         return createLoanMapper.toResponse(loan);
     }
+
 }

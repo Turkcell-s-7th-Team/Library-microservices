@@ -76,4 +76,11 @@ public class LoanRepositoryAdapter implements LoanRepository {
                 .map(loanEntityMapper::toDomain)
                 .toList();
     }
+
+    @Override
+    public boolean existsActiveByMemberIdAndBookId(MemberId memberId, BookId bookId) {
+        return jpaLoanRepository.existsActiveByMemberIdAndBookId(
+                memberId.value(), bookId.value());
+    }
+
 }

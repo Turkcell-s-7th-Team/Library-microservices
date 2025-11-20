@@ -35,11 +35,18 @@ public class LoanDomainService {
         BookId bookId = new BookId(UUID.fromString(bookIdRaw));
         StaffId staffId = new StaffId(UUID.fromString(staffIdRaw));
 
-        // kitap zaten aktif ödünçte mi?
-        boolean bookAlreadyLoaned = !loanRepository.findActiveByBookId(bookId).isEmpty();
-        if (bookAlreadyLoaned) {
-            // ileride BookAlreadyLoanedException diye ayrı exception açabilirsin
-            throw new IllegalStateException("Book is already loaned: " + bookId.value());
+        // // kitap zaten aktif ödünçte mi?
+        // boolean bookAlreadyLoaned =
+        // !loanRepository.findActiveByBookId(bookId).isEmpty();
+        // if (bookAlreadyLoaned) {
+        // // ileride BookAlreadyLoanedException diye ayrı exception açabilirsin
+        // throw new IllegalStateException("Book is already loaned: " + bookId.value());
+        // }
+
+        boolean memberAlreadyLoanedSameBook = loanRepository.existsActiveByMemberIdAndBookId(memberId, bookId);
+
+        if (memberAlreadyLoanedSameBook) {
+            throw new IllegalStateException("Member already loaned this book: " + bookId.value());
         }
 
         Loan loan = Loan.create(

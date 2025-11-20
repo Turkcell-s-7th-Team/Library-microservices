@@ -21,6 +21,7 @@ import com.TurkcellTakim7.member_service.application.dto.CreatedMemberResponse;
 import com.TurkcellTakim7.member_service.application.dto.MemberResponse;
 import com.TurkcellTakim7.member_service.application.dto.UpdateMemberRequest;
 import com.TurkcellTakim7.member_service.application.dto.UpdatedMemberResponse;
+import com.TurkcellTakim7.member_service.application.dto.feignClientDto.MemberValidationDTO;
 import com.TurkcellTakim7.member_service.application.queries.GetMemberListQuery;
 import com.TurkcellTakim7.member_service.application.queries.GetMemberQuery;
 
@@ -55,9 +56,13 @@ public class MemberController {
   }
 
   @GetMapping("/{memberId}/membership-level")
-  public String getMembershipLevel(@PathVariable UUID memberId) {
+  public MemberValidationDTO getMembershipLevel(@PathVariable UUID memberId) {
     MemberResponse memberResponse = getMember(memberId);
-    return memberResponse.membershipLevel();
+    System.out.println(memberResponse);
+    String levelStr = memberResponse.membershipLevel();
+    System.out.println(levelStr);
+    System.out.println(new MemberValidationDTO(levelStr));
+    return new MemberValidationDTO(levelStr);
   }
 
   @GetMapping
