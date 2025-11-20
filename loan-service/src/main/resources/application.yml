@@ -5,3 +5,14 @@ spring:
     active: dev
   config:
     import: configserver:http://localhost:8787
+
+  cloud:
+    stream:
+      default-binder: kafka
+      bindings:
+        loanCreated-out-0: # output channel
+          destination: loan.events.loan-created
+          contentType: application/json
+      kafka:
+        binder:
+          brokers: kafka:9092
