@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.TurkcellTakim7.loan_service.application.commands.CreateLoanCommand;
 import com.TurkcellTakim7.loan_service.application.core.command.CommandHandler;
 import com.TurkcellTakim7.loan_service.application.dtos.CreatedLoanResponse;
+import com.TurkcellTakim7.loan_service.application.events.LoanCreatedEvent;
 import com.TurkcellTakim7.loan_service.application.exception.MemberIsBannedException;
 import com.TurkcellTakim7.loan_service.application.exception.NoAvailableCopyException;
 import com.TurkcellTakim7.loan_service.application.mappers.CreateLoanMapper;
@@ -13,6 +14,7 @@ import com.TurkcellTakim7.loan_service.domain.services.LoanDomainService;
 import com.TurkcellTakim7.loan_service.infrastructure.adapter.feignClients.bookClient.BookClient;
 import com.TurkcellTakim7.loan_service.infrastructure.adapter.feignClients.memberClient.MemberClient;
 import com.TurkcellTakim7.loan_service.infrastructure.adapter.feignClients.memberClient.dto.MemberValidationDTO;
+import com.TurkcellTakim7.loan_service.infrastructure.messaging.LoanEventPublisher;
 
 @Service
 public class CreateLoanCommandHandler implements CommandHandler<CreateLoanCommand, CreatedLoanResponse> {
@@ -21,14 +23,20 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
     private final CreateLoanMapper createLoanMapper;
     private final MemberClient memberClient;
     private final BookClient bookClient;
+    private final LoanEventPublisher loanEventPublisher;
+
+   
 
     public CreateLoanCommandHandler(LoanDomainService loanDomainService, CreateLoanMapper createLoanMapper,
-            MemberClient memberClient, BookClient bookClient) {
+            MemberClient memberClient, BookClient bookClient, LoanEventPublisher loanEventPublisher) {
         this.loanDomainService = loanDomainService;
         this.createLoanMapper = createLoanMapper;
         this.memberClient = memberClient;
         this.bookClient = bookClient;
+        this.loanEventPublisher = loanEventPublisher;
     }
+
+
 
     public CreatedLoanResponse handle(CreateLoanCommand command) {
 
@@ -51,6 +59,15 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
                 command.loanDate(),
                 command.dueDate());
 
+                loanEventPublisher.publishLoanCreated(
+                    new LoanCreatedEvent(
+                        loan.id().value(),        
+                        loan.bookId().value(),    
+                        loan.memberId().value(),  
+                        loan.loanDate(),          
+                        loan.dueDate()          
+                    )
+                );
         return createLoanMapper.toResponse(loan);
     }
 
