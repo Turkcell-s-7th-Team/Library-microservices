@@ -1,13 +1,13 @@
 package com.TurkcellTakim7.loan_service.infrastructure.repository;
 
-import com.TurkcellTakim7.loan_service.infrastructure.entities.LoanEntity;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
+import com.TurkcellTakim7.loan_service.infrastructure.entities.LoanEntity;
 
 @Repository
 public interface JpaLoanRepository extends JpaRepository<LoanEntity, UUID> {
@@ -21,4 +21,6 @@ public interface JpaLoanRepository extends JpaRepository<LoanEntity, UUID> {
 
     // gecikmişleri toplamak için
     List<LoanEntity> findByDueDateBeforeAndStatus(LocalDate date, String status);
+
+    boolean existsActiveByMemberIdAndBookId(UUID memberId, UUID bookId);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.TurkcellTakim7.loan_service.domain.entities.Loan;
+import com.TurkcellTakim7.loan_service.domain.valueobjects.BookId;
 import com.TurkcellTakim7.loan_service.domain.valueobjects.LoanId;
 import com.TurkcellTakim7.loan_service.domain.valueobjects.MemberId;
 
@@ -27,4 +28,7 @@ public interface LoanRepository {
 
     // kitap bazlı kontrol istersen (aynı kitap 2 kişide olmasın diyorsan)
     List<Loan> findActiveByBookId(com.TurkcellTakim7.loan_service.domain.valueobjects.BookId bookId);
+
+    boolean existsActiveByMemberIdAndBookId(MemberId memberId, BookId bookId);
+
 }
