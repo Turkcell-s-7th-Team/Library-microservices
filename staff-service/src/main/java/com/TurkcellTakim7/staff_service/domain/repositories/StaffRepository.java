@@ -15,8 +15,6 @@ public interface StaffRepository {
 
     Optional<Staff> findByPhone(StaffPhone phone);
 
-    boolean existsByPhone(StaffPhone phone);
-
     List<Staff> getAllStaff();
 
     List<Staff> findByNameContaining(String name);
@@ -24,4 +22,7 @@ public interface StaffRepository {
     List<Staff> findBySurnameContaining(String surname);
 
     void deleteById(StaffId staffId);
+
+    boolean existsByPhone(StaffPhone phone);
+
 }

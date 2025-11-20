@@ -10,11 +10,12 @@ import com.TurkcellTakim7.staff_service.infrastructure.entities.JpaStaffEntity;
 
 public interface SpringDataStaffRepository extends JpaRepository<JpaStaffEntity, UUID> {
 
-    Optional<JpaStaffEntity> findByStaffPhone(String staffPhone);
-
-    boolean existsByStaffPhone(String staffPhone);
-
     List<JpaStaffEntity> findByNameContaining(String name);
 
+    Optional<JpaStaffEntity> findByStaffPhone(String staffPhone);
+
+    public boolean existsByStaffPhone(String staffPhone);
+
     List<JpaStaffEntity> findBySurnameContaining(String surname);
+
 }

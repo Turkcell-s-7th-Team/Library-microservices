@@ -2,17 +2,17 @@ package com.TurkcellTakim7.fine_service.domain.exceptions;
 
 import com.TurkcellTakim7.fine_service.domain.valueobjects.FineId;
 
-public class FineNotFoundException extends RuntimeException {
+public class InvalidFineOperationException extends RuntimeException {
 
     private final FineId fineId;
 
-    public FineNotFoundException(FineId fineId) {
-        super("Fine not found with id: " + fineId.value());
+    public InvalidFineOperationException(String message, FineId fineId) {
+        super(message);
         this.fineId = fineId;
     }
 
-    public FineNotFoundException(String message, FineId fineId) {
-        super(message);
+    public InvalidFineOperationException(String message, FineId fineId, Throwable cause) {
+        super(message, cause);
         this.fineId = fineId;
     }
 

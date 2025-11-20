@@ -1,5 +1,6 @@
 package com.TurkcellTakim7.fine_service.application.core;
 
-public class CommandHandler {
-
+public interface CommandHandler<C extends Command<R>, R> {
+    R handle(C command);
 }
+

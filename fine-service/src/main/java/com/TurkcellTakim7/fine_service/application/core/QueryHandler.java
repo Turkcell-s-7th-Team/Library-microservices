@@ -1,5 +1,5 @@
 package com.TurkcellTakim7.fine_service.application.core;
 
-public class QueryHandler {
-
+public interface QueryHandler<Q extends Query<R>, R> {
+    R handle(Q query);
 }

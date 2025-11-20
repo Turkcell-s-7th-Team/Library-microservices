@@ -103,6 +103,19 @@ services:
       - "5443:5432"
     volumes:
       - categorydb_vol:/var/lib/postgresql/data
+
+  finesv_db:
+    container_name: finesv_db
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: fine_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: fineservice_db_password
+    ports:
+      - "5444:5432"
+    volumes:
+      - finedb_vol:/var/lib/postgresql/data
   
   kafka:
     image: apache/kafka:3.8.0
@@ -192,6 +205,7 @@ volumes:
   kafka-data:
   kc_pg_data:
   categorydb_vol:
+  finedb_vol:
 
 networks:
   kafkanet:

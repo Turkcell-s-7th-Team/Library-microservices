@@ -12,28 +12,21 @@ public class Staff {
     private String surname;
     private StaffPhone staffPhone;
 
-    // Private constructor
     private Staff(StaffId staffId, String name, String surname, StaffPhone staffPhone) {
         this.staffId = Objects.requireNonNull(staffId, "StaffId cannot be null");
         this.name = validateName(name);
         this.surname = validateName(surname);
-        this.staffPhone = Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
+        this.staffPhone = Objects.requireNonNull(staffPhone, "StaffPhone cannot be null");
     }
 
     // Factory Methods
     public static Staff create(String name, String surname, StaffPhone staffPhone) {
-        // Name & surname validation entity içinde
-        String validatedName = validateName(name);
-        String validatedSurname = validateName(surname);
-
-        // Phone zaten StaffPhone VO olduğu için kendi içinde validate ediliyor
-        Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
-
-        return new Staff(StaffId.generate(), validatedName, validatedSurname, staffPhone);
+        validateName(name);
+        validateName(surname);
+        return new Staff(StaffId.generate(), name, surname, staffPhone);
     }
 
     public static Staff rehydrate(StaffId staffId, String name, String surname, StaffPhone staffPhone) {
-        // Rehydrate genelde DB’den yüklerken kullanılır; yine de null check iyidir
         return new Staff(staffId, name, surname, staffPhone);
     }
 
@@ -59,10 +52,10 @@ public class Staff {
     }
 
     // Business Methods
-    public void updatePersonalInfo(String name, String surname, StaffPhone staffPhone) {
+    public void updatePersonalInfo(String name, String surname, StaffPhone phone) {
         this.name = validateName(name);
         this.surname = validateName(surname);
-        this.staffPhone = Objects.requireNonNull(staffPhone, "PhoneNumber cannot be null");
+        this.staffPhone = Objects.requireNonNull(phone, "StaffPhone cannot be null");
     }
 
     // Validation Methods
@@ -77,13 +70,13 @@ public class Staff {
         return name.trim();
     }
 
-    // Artık validatePhone yok; telefon validasyonu StaffPhone içinde olmalı
-
     // Equality
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Staff)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof Staff))
+            return false;
         Staff staff = (Staff) o;
         return Objects.equals(staffId, staff.staffId);
     }

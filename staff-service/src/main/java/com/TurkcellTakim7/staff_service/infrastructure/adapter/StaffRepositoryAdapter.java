@@ -45,11 +45,6 @@ public class StaffRepositoryAdapter implements StaffRepository {
     }
 
     @Override
-    public boolean existsByPhone(StaffPhone phone) {
-        return springDataStaffRepository.existsByStaffPhone(phone.value());
-    }
-
-    @Override
     public List<Staff> getAllStaff() {
         return springDataStaffRepository.findAll()
                 .stream()
@@ -66,6 +61,16 @@ public class StaffRepositoryAdapter implements StaffRepository {
     }
 
     @Override
+    public void deleteById(StaffId staffId) {
+        springDataStaffRepository.deleteById(staffId.value());
+    }
+
+    @Override
+    public boolean existsByPhone(StaffPhone phone) {
+        return springDataStaffRepository.existsByStaffPhone(phone.value());
+    }
+
+    @Override
     public List<Staff> findBySurnameContaining(String surname) {
         return springDataStaffRepository.findBySurnameContaining(surname)
                 .stream()
@@ -73,8 +78,4 @@ public class StaffRepositoryAdapter implements StaffRepository {
                 .toList();
     }
 
-    @Override
-    public void deleteById(StaffId staffId) {
-        springDataStaffRepository.deleteById(staffId.value());
-    }
 }
