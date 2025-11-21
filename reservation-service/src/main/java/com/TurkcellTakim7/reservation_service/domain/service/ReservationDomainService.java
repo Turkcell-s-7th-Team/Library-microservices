@@ -3,6 +3,7 @@ package com.TurkcellTakim7.reservation_service.domain.service;
 import java.time.Clock;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,6 @@ public class ReservationDomainService {
         this.reservationRepository = reservationRepository;
     }
 
-    /**
-     * Üye için bir kitap rezervasyonu oluşturur.
-     * Artık sadece value-object seviyesinde konuşuyoruz.
-     */
     public Reservation createReservation(MemberId memberId, BookId bookId) {
 
         if (memberId == null) {
@@ -49,7 +46,6 @@ public class ReservationDomainService {
                 activeStatuses);
 
         if (existingActive.isPresent()) {
-
             throw new ActiveReservationExistsException(memberId.value(), bookId.value());
         }
 
@@ -104,6 +100,9 @@ public class ReservationDomainService {
         reservationRepository.save(reservation);
     }
 
+    /**
+     * Eski metod: sadece sıradaki PENDING rezervasyonu WAITING_FOR_PICKUP yapar.
+     */
     public Reservation markNextReservationReadyForPickup(BookId bookId) {
         if (bookId == null) {
             throw new ReservationValidationException("bookId cannot be null");
@@ -125,6 +124,42 @@ public class ReservationDomainService {
         reservation.markReadyForPickup(clock, DEFAULT_PICKUP_DURATION);
 
         return reservationRepository.save(reservation);
+    }
+
+    /**
+     * Yeni metod:
+     * 1) sıradaki PENDING rezervasyonu WAITING_FOR_PICKUP yapar,
+     * 2) aktif kuyruğun (PENDING + WAITING_FOR_PICKUP) queuePosition'larını 1,2,3... olarak sıkıştırır.
+     */
+    public Reservation markNextReservationReadyForPickupAndReorder(BookId bookId) {
+        Reservation reservation = markNextReservationReadyForPickup(bookId);
+
+        if (reservation == null) {
+            return null;
+        }
+
+        reorderActiveQueueForBook(bookId);
+
+        return reservation;
+    }
+
+    /**
+     * Aktif (isActive == true) rezervasyonların queuePosition'unu
+     * 1,2,3,... şeklinde yeniden numaralandırır.
+     */
+    private void reorderActiveQueueForBook(BookId bookId) {
+        List<Reservation> queue = reservationRepository.findByBookIdOrderByQueuePositionAsc(bookId);
+
+        List<Reservation> active = queue.stream()
+                .filter(Reservation::isActive)
+                .sorted(Comparator.comparingInt(Reservation::getQueuePosition))
+                .toList();
+
+        int position = 1;
+        for (Reservation r : active) {
+            r.setQueuePosition(position++);
+            reservationRepository.save(r);
+        }
     }
 
     public void deleteReservation(ReservationId reservationId) {

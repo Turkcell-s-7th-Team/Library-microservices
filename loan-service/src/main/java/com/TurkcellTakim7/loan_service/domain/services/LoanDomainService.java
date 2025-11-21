@@ -79,17 +79,19 @@ public class LoanDomainService {
     /**
      * Loan'u iade eder.
      */
-    public void returnLoan(String loanIdRaw, LocalDate returnDate) {
-        LoanId loanId = new LoanId(UUID.fromString(loanIdRaw));
-
+    public Loan returnLoan(UUID loanIdRaw, LocalDate returnDate) {
+        LoanId loanId = new LoanId(loanIdRaw);
+    
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new LoanNotFoundException(loanId.value()));
-
+    
         LocalDate effectiveReturnDate = (returnDate != null) ? returnDate : LocalDate.now();
         loan.returnBook(effectiveReturnDate);
+    
 
-        loanRepository.save(loan);
+        return loanRepository.save(loan);
     }
+    
 
     /**
      * Loan'un vadesini uzatır.
