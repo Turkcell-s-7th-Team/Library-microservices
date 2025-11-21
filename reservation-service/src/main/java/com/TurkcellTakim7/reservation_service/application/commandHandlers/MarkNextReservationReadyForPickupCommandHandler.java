@@ -31,11 +31,10 @@ public class MarkNextReservationReadyForPickupCommandHandler
         UUID bookIdRaw = command.bookId();
         BookId bookId = new BookId(bookIdRaw);
 
-        Reservation reservation = reservationDomainService.markNextReservationReadyForPickup(bookId);
+        Reservation reservation = reservationDomainService.markNextReservationReadyForPickupAndReorder(bookId);
 
-        // Kuyrukta PENDING yoksa domain null döndürüyor
         if (reservation == null) {
-            return null; // Controller bunu 204 No Content olarak map edebilir
+            return null;
         }
 
         return markReadyForPickupMapper.toResponse(reservation);

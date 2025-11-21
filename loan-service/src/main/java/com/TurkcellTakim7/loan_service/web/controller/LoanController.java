@@ -1,6 +1,7 @@
 package com.TurkcellTakim7.loan_service.web.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +77,7 @@ public class LoanController {
 
     // 4) return loan
     @PostMapping("/{id}/return")
-    public ResponseEntity<Void> returnLoan(@PathVariable("id") String id,
+    public ResponseEntity<Void> returnLoan(@PathVariable("id") UUID id,
             @RequestBody(required = false) ReturnLoanRequest request) {
 
         returnLoanCommandHandler.handle(
