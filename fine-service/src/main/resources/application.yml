@@ -1,6 +1,10 @@
 spring:
   application:
     name: fine-service
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://localhost:8787
 
 server:
   port: 8083
