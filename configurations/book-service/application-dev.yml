@@ -15,19 +15,18 @@ spring:
 
   cloud:
     stream:
-      defaultBinder: kafka
       kafka:
         binder:
           brokers: localhost:9094
       bindings:
         loanCreated-in-0:
           destination: loan-created-topic
-          group: book-service
+
           contentType: application/json
-        loanReturned-in-0:
-          destination: loan-returned-topic
-          group: book-service
-          contentType: application/json
+        # loanReturned-in-0:
+        #   destination: loan-returned-topic
+        #   group: book-service
+        #   contentType: application/json
 
   jpa:
     hibernate:
