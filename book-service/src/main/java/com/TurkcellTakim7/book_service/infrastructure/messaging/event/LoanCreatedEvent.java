@@ -3,10 +3,13 @@ package com.TurkcellTakim7.book_service.infrastructure.messaging.event;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import jakarta.annotation.Nonnull;
+import jakarta.validation.constraints.NotNull;
+
 public record LoanCreatedEvent(
-    UUID loanId,
-    UUID bookId,
-    UUID memberId,
-    LocalDate loanDate,
-    LocalDate dueDate) {
+        @Nonnull UUID loanId,
+        @NotNull UUID bookId,
+        @NotNull UUID memberId,
+        @NotNull LocalDate loanDate,
+        @NotNull LocalDate dueDate) {
 }

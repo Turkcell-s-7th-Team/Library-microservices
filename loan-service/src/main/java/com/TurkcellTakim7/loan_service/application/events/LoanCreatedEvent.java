@@ -7,9 +7,9 @@ import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotNull;
 
 public record LoanCreatedEvent(
-    @Nonnull UUID loanId,
-    @NotNull UUID bookId,
-    @NotNull UUID memberId,
-    @NotNull LocalDate loanDate,
-    @NotNull LocalDate dueDate) {
+        @Nonnull UUID loanId,
+        @NotNull UUID bookId,
+        @NotNull UUID memberId,
+        @NotNull LocalDate loanDate,
+        @NotNull LocalDate dueDate) {
 }

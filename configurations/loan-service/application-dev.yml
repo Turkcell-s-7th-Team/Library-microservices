@@ -18,17 +18,15 @@ spring:
           brokers: localhost:9094
       bindings:
         loanCreated-out-0:
-          destination: loan-topic
+          destination: loan-created-topic
           contentType: application/json
         loanReturned-out-0:
-          destination: loan-topic
+          destination: loan-returned-topic
           contentType: application/json
-          
+
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  

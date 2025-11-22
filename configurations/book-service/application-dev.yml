@@ -21,11 +21,11 @@ spring:
           brokers: localhost:9094
       bindings:
         loanCreated-in-0:
-          destination: loan-topic
+          destination: loan-created-topic
           group: book-service
           contentType: application/json
         loanReturned-in-0:
-          destination: loan-topic
+          destination: loan-returned-topic
           group: book-service
           contentType: application/json
 

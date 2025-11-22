@@ -16,10 +16,12 @@ public class LoanEventPublisher {
   }
 
   public void publishLoanCreated(LoanCreatedEvent event) {
+    System.out.println("event publish edildi mi ");
     streamBridge.send("loanCreated-out-0", event);
   }
 
   public void publishLoanReturned(LoanReturnedEvent event) {
+    System.out.println("event 2 publish edildi mi?");
     streamBridge.send("loanReturned-out-0", event);
   }
 }
