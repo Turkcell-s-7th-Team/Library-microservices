@@ -22,6 +22,12 @@ spring:
         bookEvents-out-0:
           destination: book-events
           contentType: application/json
+        loanCreated-in-0:
+          destination: loan.events.loan-created
+          contentType: application/json
+        loanReturnedConsumer-in-0:
+          destination: loan-returned
+          contentType: application/json
 
   jpa:
     hibernate:

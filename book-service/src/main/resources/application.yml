@@ -13,8 +13,9 @@ spring:
         loanCreated-in-0:
           destination: loan.events.loan-created
           contentType: application/json
-        loanReturned-out-0:
+        loanReturnedConsumer-in-0:
           destination: loan-returned
+          contentType: application/json
       kafka:
         binder:
           brokers: kafka:9092
