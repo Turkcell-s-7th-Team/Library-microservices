@@ -1,5 +1,6 @@
 package com.TurkcellTakim7.fine_service.application.commandHandlers;
 
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
 
 import com.TurkcellTakim7.fine_service.application.commands.CreateFineCommand;
@@ -13,6 +14,7 @@ import com.TurkcellTakim7.fine_service.domain.services.FineDomainService;
 import com.TurkcellTakim7.fine_service.domain.valueobjects.Amount;
 import com.TurkcellTakim7.fine_service.domain.valueobjects.LoanId;
 import com.TurkcellTakim7.fine_service.domain.valueobjects.MemberId;
+import com.TurkcellTakim7.fine_service.infrastructure.messaging.events.FineCreatedEvent;
 
 @Component
 public class CreateFineCommandHandler implements CommandHandler<CreateFineCommand, CreatedFineResponse> {
@@ -20,16 +22,16 @@ public class CreateFineCommandHandler implements CommandHandler<CreateFineComman
     private final CreateFineMapper createFineMapper;
     private final FineDomainService fineDomainService;
     private final FineRepository fineRepository;
+    private final StreamBridge streamBridge;
 
-    public CreateFineCommandHandler(CreateFineMapper createFineMapper,
-                                    FineDomainService fineDomainService,
-                                    FineRepository fineRepository) {
+    public CreateFineCommandHandler(CreateFineMapper createFineMapper, FineDomainService fineDomainService,
+            FineRepository fineRepository, StreamBridge streamBridge) {
         this.createFineMapper = createFineMapper;
         this.fineDomainService = fineDomainService;
         this.fineRepository = fineRepository;
+        this.streamBridge = streamBridge;
     }
 
-    
     public CreatedFineResponse handle(CreateFineCommand command) {
 
         MemberId memberId = new MemberId(command.memberId());
@@ -41,11 +43,14 @@ public class CreateFineCommandHandler implements CommandHandler<CreateFineComman
                 memberId,
                 loanId,
                 fineType,
-                amount
-        );
+                amount);
 
         fine = fineRepository.save(fine);
 
+        FineCreatedEvent event = new FineCreatedEvent(
+                fine.getMemberId().value());
+        streamBridge.send("fineCreated-out-0", event);
+        System.out.println("event gönderildi");
         return createFineMapper.toResponse(fine);
     }
 }
