@@ -15,16 +15,17 @@ spring:
 
   cloud:
     stream:
+      defaultBinder: kafka
       kafka:
         binder:
           brokers: localhost:9094
       bindings:
         loanCreated-in-0:
-          destination: loan.events.loan-created
+          destination: loan-topic
           group: book-service
           contentType: application/json
         loanReturned-in-0:
-          destination: loan.events.loan-created
+          destination: loan-topic
           group: book-service
           contentType: application/json
 
