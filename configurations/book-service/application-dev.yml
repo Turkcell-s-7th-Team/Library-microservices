@@ -19,14 +19,13 @@ spring:
         binder:
           brokers: localhost:9094
       bindings:
+        bookEvents-out-0:
+          destination: book-events
+          contentType: application/json
+
         loanCreated-in-0:
           destination: loan-created-topic
-
           contentType: application/json
-        # loanReturned-in-0:
-        #   destination: loan-returned-topic
-        #   group: book-service
-        #   contentType: application/json
 
   jpa:
     hibernate:

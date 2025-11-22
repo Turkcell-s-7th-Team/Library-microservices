@@ -1,5 +1,6 @@
 package com.TurkcellTakim7.loan_service.application.commandHandlers;
 
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import com.TurkcellTakim7.loan_service.application.commands.CreateLoanCommand;
@@ -24,19 +25,18 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
     private final MemberClient memberClient;
     private final BookClient bookClient;
     private final LoanEventPublisher loanEventPublisher;
-
-   
+    private final StreamBridge streamBridge;
 
     public CreateLoanCommandHandler(LoanDomainService loanDomainService, CreateLoanMapper createLoanMapper,
-            MemberClient memberClient, BookClient bookClient, LoanEventPublisher loanEventPublisher) {
+            MemberClient memberClient, BookClient bookClient, LoanEventPublisher loanEventPublisher,
+            StreamBridge streamBridge) {
         this.loanDomainService = loanDomainService;
         this.createLoanMapper = createLoanMapper;
         this.memberClient = memberClient;
         this.bookClient = bookClient;
         this.loanEventPublisher = loanEventPublisher;
+        this.streamBridge = streamBridge;
     }
-
-
 
     public CreatedLoanResponse handle(CreateLoanCommand command) {
 
@@ -59,15 +59,9 @@ public class CreateLoanCommandHandler implements CommandHandler<CreateLoanComman
                 command.loanDate(),
                 command.dueDate());
 
-                loanEventPublisher.publishLoanCreated(
-                    new LoanCreatedEvent(
-                        loan.id().value(),        
-                        loan.bookId().value(),    
-                        loan.memberId().value(),  
-                        loan.loanDate(),          
-                        loan.dueDate()          
-                    )
-                );
+        LoanCreatedEvent event = new LoanCreatedEvent(loan.id().value(), loan.bookId().value(), loan.memberId().value(),
+                loan.loanDate(), loan.dueDate());
+        streamBridge.send("loanCreated-out-0", event);
         return createLoanMapper.toResponse(loan);
     }
 

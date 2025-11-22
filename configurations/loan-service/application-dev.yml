@@ -18,10 +18,7 @@ spring:
           brokers: localhost:9094
       bindings:
         loanCreated-out-0:
-          destination: loan-created-topic
-          contentType: application/json
-        loanReturned-out-0:
-          destination: loan-returned-topic
+          destination: book-events
           contentType: application/json
 
   jpa:

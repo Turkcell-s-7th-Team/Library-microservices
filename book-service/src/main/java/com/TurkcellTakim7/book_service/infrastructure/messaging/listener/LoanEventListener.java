@@ -22,6 +22,7 @@ public class LoanEventListener {
   @Bean
   public Consumer<LoanCreatedEvent> loanCreated() {
     return event -> {
+      System.out.println("event consume edildi");
       System.out.println("Received LoanCreatedEvent for bookId: " + event.bookId());
       bookDomainService.borrowBook(new BookId(event.bookId()));
     };
