@@ -28,7 +28,7 @@ public class LoanEventListener {
   }
 
   @Bean
-  public Consumer<LoanReturnedEvent> loanReturnedConsumer() {
+  public Consumer<LoanReturnedEvent> loanReturned() {
     return event -> {
       BookId bookId = new BookId(event.bookId());
       bookDomainService.returnBook(bookId);
