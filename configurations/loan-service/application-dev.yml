@@ -12,22 +12,22 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9094
+
   cloud:
     stream:
       kafka:
         binder:
           brokers: localhost:9094
       bindings:
-        loanCreated-out-0:
-          destination: loan.events.loan-created
+        loanEvents-out-0:
+          destination: loan-topic
           contentType: application/json
-        loanReturned-out-0:
-          destination: loan.events.loan-returned
-          contentType: application/json
-
+          
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  

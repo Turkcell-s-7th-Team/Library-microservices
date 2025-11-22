@@ -12,19 +12,15 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9094
+
   cloud:
     stream:
       kafka:
         binder:
           brokers: localhost:9094
       bindings:
-        loanCreated-in-0:
-          destination: loan.events.loan-created
-          group: book-service-group
-          contentType: application/json
-        loanReturnedConsumer-in-0:
-          destination: loan.events.loan-returned
-          group: book-service-group
+        bookEvents-out-0:
+          destination: book-events
           contentType: application/json
 
   jpa:
