@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.TurkcellTakim7.book_service.domain.services.BookDomainService;
 import com.TurkcellTakim7.book_service.domain.valueobjects.BookId;
 import com.TurkcellTakim7.book_service.infrastructure.messaging.event.LoanCreatedEvent;
+import com.TurkcellTakim7.book_service.infrastructure.messaging.event.LoanReturnedEvent;
 
 @Component
 public class LoanEventListener {
@@ -23,6 +24,14 @@ public class LoanEventListener {
     return event -> {
       System.out.println("Received LoanCreatedEvent for bookId: " + event.bookId());
       bookDomainService.borrowBook(new BookId(event.bookId()));
+    };
+  }
+
+  @Bean
+  public Consumer<LoanReturnedEvent> loanReturnedConsumer() {
+    return event -> {
+      BookId bookId = new BookId(event.bookId());
+      bookDomainService.returnBook(bookId);
     };
   }
 

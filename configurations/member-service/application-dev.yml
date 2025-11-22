@@ -23,6 +23,10 @@ spring:
           destination: member-events
           contentType: application/json
 
+        fineCreated-in-0:
+          destination: member-events
+          group: member-service
+          contentType: application/json
   jpa:
     hibernate:
       ddl-auto: update

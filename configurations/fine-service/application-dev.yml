@@ -10,6 +10,17 @@ spring:
     password: fineservice_db_password
     driver-class-name: org.postgresql.Driver
 
+  cloud:
+    stream:
+      defaultBinder: kafka
+      kafka:
+        binder:
+          brokers: localhost:9094
+      bindings:
+        fineCreated-out-0:
+          destination: member-events
+          content-type: application/json
+
   jpa:
     hibernate:
       ddl-auto: update
