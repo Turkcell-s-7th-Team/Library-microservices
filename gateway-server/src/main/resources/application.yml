@@ -5,3 +5,8 @@ spring:
     active: dev
   config:
     import: configserver:${CONFIG_URI:http://localhost:8787}
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
