@@ -8,13 +8,14 @@ spring:
   cloud:
     stream:
       defaultBinder: kafka
-
       bindings:
         loanCreated-in-0:
           destination: loan.events.loan-created
+          group: book-service-group
           contentType: application/json
         loanReturnedConsumer-in-0:
-          destination: loan-returned
+          destination: loan.events.loan-returned
+          group: book-service-group
           contentType: application/json
       kafka:
         binder:
