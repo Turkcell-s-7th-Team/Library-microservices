@@ -12,7 +12,6 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9094
-
   cloud:
     stream:
       kafka:

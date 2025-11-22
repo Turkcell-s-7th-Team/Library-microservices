@@ -6,16 +6,3 @@ spring:
   config:
     import: configserver:http://localhost:8787
 
-  cloud:
-    stream:
-      default-binder: kafka
-      bindings:
-        loanCreated-out-0:
-          destination: loan.events.loan-created
-          contentType: application/json
-        loanReturned-out-0:
-          destination: loan.events.loan-returned
-          contentType: application/json
-      kafka:
-        binder:
-          brokers: localhost:9094
