@@ -10,23 +10,34 @@ spring:
     password: reservationservice_db_password
     driver-class-name: org.postgresql.Driver
 
-  kafka:
-    bootstrap-servers: localhost:9094
-
   cloud:
+    function:
+      # Bean isimleriyle birebir aynı olmalı
+      definition: loanCreatedReservation;loanReturnedReservation
+
     stream:
+      default-binder: kafka
+
       kafka:
         binder:
           brokers: localhost:9094
+
       bindings:
-        reservationEvents-out-0:
-          destination: reservation-events
-          contentType: application/json
+        # LoanCreatedEvent consumer (reservation tarafı)
+        loanCreatedReservation-in-0:
+          destination: loancreated-events
+          group: reservation-service
+          content-type: application/json
+
+        # LoanReturnedEvent consumer (reservation tarafı)
+        loanReturnedReservation-in-0:
+          destination: loanreturn-events
+          group: reservation-service
+          content-type: application/json
+
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  

@@ -5,13 +5,3 @@ spring:
     active: dev
   config:
     import: configserver:http://localhost:8787
-  cloud:
-    stream:
-      default-binder: kafka
-      bindings:
-        loanReturnedConsumer-in-0:
-          destination: loan-returned
-          group: reservation-service
-      kafka:
-        binder:
-          brokers: kafka:9092

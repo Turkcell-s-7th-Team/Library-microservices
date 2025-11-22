@@ -10,22 +10,30 @@ spring:
     password: bookservice_db_password
     driver-class-name: org.postgresql.Driver
 
-  kafka:
-    bootstrap-servers: localhost:9094
-
   cloud:
+    function:
+      # Bean isimleri birebir: loanCreated(), loanReturned()
+      definition: loanCreated;loanReturned
+
     stream:
+      default-binder: kafka
+
       kafka:
         binder:
           brokers: localhost:9094
-      bindings:
-        bookEvents-out-0:
-          destination: book-events
-          contentType: application/json
 
+      bindings:
+        # LoanCreatedEvent consumer
         loanCreated-in-0:
-          destination: loan-created-topic
-          contentType: application/json
+          destination: loancreated-events
+          group: book-service
+          content-type: application/json
+
+        # LoanReturnedEvent consumer
+        loanReturned-in-0:
+          destination: loanreturn-events
+          group: book-service
+          content-type: application/json
 
   jpa:
     hibernate:

@@ -22,8 +22,7 @@ public class LoanEventListener {
   @Bean
   public Consumer<LoanCreatedEvent> loanCreated() {
     return event -> {
-      System.out.println("event consume edildi");
-      System.out.println("Received LoanCreatedEvent for bookId: " + event.bookId());
+      System.out.println("📥 [BOOK] LoanCreatedEvent consumed, bookId = " + event.bookId());
       bookDomainService.borrowBook(new BookId(event.bookId()));
     };
   }
@@ -31,9 +30,8 @@ public class LoanEventListener {
   @Bean
   public Consumer<LoanReturnedEvent> loanReturned() {
     return event -> {
-      BookId bookId = new BookId(event.bookId());
-      bookDomainService.returnBook(bookId);
+      System.out.println("📥 [BOOK] LoanReturnedEvent consumed, bookId = " + event.bookId());
+      bookDomainService.returnBook(new BookId(event.bookId()));
     };
   }
-
 }
