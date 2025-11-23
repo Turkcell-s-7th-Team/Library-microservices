@@ -111,4 +111,8 @@ Postman/Curl gibi bir araçla API Gateway üzerinden endpoint'leri test edin.
 | **Eureka Server**  | Servis Keşif Paneli                     | GET       | `http://localhost:8761`                  | Gateway üzerinden geçen bir route değildir.                           |
 
 
+![Architecture Diagram](./architecture-diagram.png)
+
+
+
 
