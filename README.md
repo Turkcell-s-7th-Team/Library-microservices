@@ -54,14 +54,22 @@ Loan Service, bir ödünç alma komutu aldığında:
 B. Asenkron İletişim (Apache Kafka ile Olay Tabanlı Güncellemeler)
 Veri tutarlılığını sağlamak ve servisleri birbirinden bağımsız kılmak için olay tabanlı mimari (Event-Driven Architecture) kullanılır. Kafka bu olayların taşınması için kullanılır:
 
-Örnek 1: Üyelik Güncelleme (Banned Status):
-Fine Service, bir üyeye ceza (fine) oluşturduğunda bir Kafka olayı (FineCreatedEvent) yayınlar.
-Member Service, bu olayı tüketir, ilgili üyenin veritabanındaki status bilgisini BANNED olarak günceller.
+📌 Örnek 1: Üyelik Güncelleme (Banned Status):
+✔ Fine Service, bir üyeye ceza (fine) oluşturduğunda bir Kafka olayı (FineCreatedEvent) yayınlar.
+✔ Member Service, bu olayı tüketir, ilgili üyenin veritabanındaki status bilgisini BANNED olarak günceller.
 
-Örnek 2: Kitap Stok Güncelleme:
-Başarılı bir ödünç alma işlemi sonrasında, Loan Service bir olay yayınlar.
-Book Service, bu olayı dinler ve kitaba ait available copies sayısını azaltır.
-İade işleminde ise aynı mekanizma ile available copies sayısı artırılır.
+📌 Örnek 2: Kitap Stok Güncelleme:
+✔ Başarılı bir ödünç alma işlemi sonrasında, Loan Service bir olay yayınlar.
+✔ Book Service, bu olayı dinler ve kitaba ait available copies sayısını azaltır.
+✔ İade işleminde ise aynı mekanizma ile available copies sayısı artırılır.
+
+📌 Örnek 3: Rezervasyon (Reservation) Asenkron İş Akışı
+Reservation Service, loan-service'in durumuna göre otomatik tetiklenen bir iş akışı yürütür:
+✔ Loan Service, loan iadesi belirten bir event yayınlar.
+✔ Reservation Service bu olayı dinler ve kitap için bekleyen rezervasyonları kontrol eder.
+✔ Eğer sıradaki rezervasyonun zamanı gelmişse:
+   ➡ Rezervasyonun durumu WAITING_FOR_PICKUP olarak güncellenir.
+Bu sayede rezervasyon sırası, tamamen asenkron ve otomatik bir iş akışı ile yönetilir.
 
 
 🚀 Kurulum ve Çalıştırma
