@@ -109,10 +109,3 @@ Postman/Curl gibi bir araçla API Gateway üzerinden endpoint'leri test edin.
 | **Fine Service**   | Cezayı Ödeme (Fine Kapatma)             | PUT       | `/api/v1/fines/{fineId}/pay`             |                                                                       |
 | **API Gateway**    | Eureka Kayıtlı Servislerin Güzergâhları | GET       | `/actuator/gateway/routes`               | Servis routing kontrolü (Developers).                                 |
 | **Eureka Server**  | Servis Keşif Paneli                     | GET       | `http://localhost:8761`                  | Gateway üzerinden geçen bir route değildir.                           |
-
-
-![Architecture Diagram](./architecture-diagram.png)
-
-
-
-
