@@ -92,7 +92,7 @@ Postman/Curl gibi bir araçla API Gateway üzerinden endpoint'leri test edin.
 | **Book Service**   | Tüm Kitapları Listele                   | GET       | `/api/v1/books`                          |                                                                       |
 | **Book Service**   | Yeni Kitap Ekleme                       | POST      | `/api/v1/books`                          |                                                                       |
 | **Book Service**   | Kitap Bilgilerini güncelle              | PUT       | `/api/v1/books/{bookId}/`                |                                                                       |
-| **Book Service**   | Kitap Stok Durumunu Güncelle            | PUT       | `/api/v1/books/{bookId}/stock`           | Kafka event’leri ile stok azaltma/artırma yapılır.                    |
+| **Book Service**   | Kitap Stok Durumunu Güncelle            | PUT       | `/api/v1/books/{bookId}`                 | Kafka event’leri ile stok azaltma/artırma yapılır.                    |
 | **Loan Service**   | Kitap Ödünç Alma (Loan Oluşturma)       | POST      | `/api/v1/loans`                          | Feign ile **member status** ve **book copies** kontrol edilir.        |
 | **Loan Service**   | Kitap İade Etme                         | PUT       | `/api/v1/loans/{loanId}/return`          | Başarılı dönüşte Kafka → Book Service stok +1                         |
 | **Loan Service**   | Üyenin Aktif Loanlarını Listele         | GET       | `/api/v1/loans/member/{memberId}`        |                                                                       |
