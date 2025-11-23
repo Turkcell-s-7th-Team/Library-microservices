@@ -121,8 +121,9 @@ Postman/Curl gibi bir araçla API Gateway üzerinden endpoint'leri test edin.
 
 
 
+   <img width="1827" height="833" alt="Architecture" src="https://github.com/user-attachments/assets/8e112923-b6c9-4329-84c5-43926bfbc9c6" />
 
-<img width="1920" height="1080" alt="Architecture" src="https://github.com/user-attachments/assets/9328906a-531b-41e7-9609-8a30a4f4a29c" />
+
 
 
 
